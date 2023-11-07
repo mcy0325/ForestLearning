@@ -7,6 +7,10 @@ android {
     namespace = "com.example.forestlearning"
     compileSdk = 33
 
+    viewBinding{
+        enable = true
+    }
+
     defaultConfig {
         applicationId = "com.example.forestlearning"
         minSdk = 24

@@ -19,11 +19,12 @@ class TimetableFragment : Fragment() {
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val button = binding.courseButton
-        button.setOnClickListener {
+        val courseBtn = binding.courseButton
+
+        courseBtn.setOnClickListener {
             // 프래그먼트 전환 코드
             val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frameCouse, CourseFragment())
+            fragmentTransaction.replace(R.id.frameTimetable, CourseFragment())
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }

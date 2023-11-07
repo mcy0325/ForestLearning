@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/calendarFragment">
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.forestlearning.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_fruitshowFragment"
+            app:destination="@id/fruitshowFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_todaytreeFragment"
+            app:destination="@id/todaytreeFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_todolistFragment"
+            app:destination="@id/todolistFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_studytimeFragment"
+            app:destination="@id/studytimeFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_timetableFragment2"
+            app:destination="@id/timetableFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fruitshowFragment"
+        android:name="com.example.forestlearning.FruitshowFragment"
+        android:label="fragment_fruitshow"
+        tools:layout="@layout/fragment_fruitshow" />
+    <fragment
+        android:id="@+id/studytimeFragment"
+        android:name="com.example.forestlearning.StudytimeFragment"
+        android:label="fragment_studytime"
+        tools:layout="@layout/fragment_studytime" />
+    <fragment
+        android:id="@+id/todolistFragment"
+        android:name="com.example.forestlearning.TodolistFragment"
+        android:label="fragment_todolist"
+        tools:layout="@layout/fragment_todolist" />
+    <fragment
+        android:id="@+id/todaytreeFragment"
+        android:name="com.example.forestlearning.TodaytreeFragment"
+        android:label="fragment_todaytree"
+        tools:layout="@layout/fragment_todaytree" />
+    <fragment
+        android:id="@+id/timetableFragment2"
+        android:name="com.example.forestlearning.TimetableFragment"
+        android:label="fragment_timetable"
+        tools:layout="@layout/fragment_timetable" />
+</navigation>

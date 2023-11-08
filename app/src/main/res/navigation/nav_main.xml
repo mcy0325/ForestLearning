@@ -24,7 +24,7 @@
             app:destination="@id/studytimeFragment" />
         <action
             android:id="@+id/action_calendarFragment_to_timetableFragment2"
-            app:destination="@id/timetableFragment2" />
+            app:destination="@id/timetableFragment" />
     </fragment>
     <fragment
         android:id="@+id/fruitshowFragment"
@@ -47,8 +47,17 @@
         android:label="fragment_todaytree"
         tools:layout="@layout/fragment_todaytree" />
     <fragment
-        android:id="@+id/timetableFragment2"
+        android:id="@+id/timetableFragment"
         android:name="com.example.forestlearning.TimetableFragment"
         android:label="fragment_timetable"
-        tools:layout="@layout/fragment_timetable" />
+        tools:layout="@layout/fragment_timetable" >
+        <action
+            android:id="@+id/action_timetableFragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseFragment"
+        android:name="com.example.forestlearning.CourseFragment"
+        android:label="fragment_course"
+        tools:layout="@layout/fragment_course" />
 </navigation>

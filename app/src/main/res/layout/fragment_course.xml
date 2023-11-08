@@ -1,91 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CourseLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".CourseFragment">
 
     <RadioGroup
+        android:id="@+id/courseUniversityGroup"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/courseUniversityGroup"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <RadioButton
-            android:layout_width="0dp"
+            android:id="@+id/undergraduate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="학부"
-            android:id="@+id/university"/>
+            android:text="전공" />
 
         <RadioButton
-            android:layout_width="0dp"
+            android:id="@+id/liberal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="대학원"
-            android:id="@+id/graduate"/>
+            android:text="교양" />
 
     </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:paddingRight="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp">
 
         <Spinner
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/yearSpinner"></Spinner>
-
-        <Spinner
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/termSpinner"></Spinner>
-
-        <Spinner
+            android:id="@+id/yearSpinner"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/areaSpinner"></Spinner>
+            android:layout_marginStart="15dp" />
 
+        <Spinner
+            android:id="@+id/termSpinner"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"/>
+
+        <Spinner
+            android:id="@+id/areaSpinner"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:paddingRight="10dp">
+        android:orientation="horizontal"
+        android:paddingEnd="10dp">
 
         <Spinner
+            android:id="@+id/majorSpinner"
             android:layout_width="230dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/majorSpinner"></Spinner>
+            android:layout_marginStart="10dp" />
 
         <Button
+            android:id="@+id/findButton"
             android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:textSize="15dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             android:background="@color/design_default_color_background"
             android:text="강의 검색"
-            android:layout_gravity="center"
-            android:id="@+id/findButton"
-            android:layout_marginLeft="10dp"/>
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -96,11 +98,11 @@
         android:background="@color/white">
 
         <ListView
+            android:id="@+id/courseListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/courseListView"
-            android:dividerHeight="10dp"
-            android:divider="@color/white"></ListView>
+            android:divider="@color/white"
+            android:dividerHeight="10dp" />
 
     </LinearLayout>
 

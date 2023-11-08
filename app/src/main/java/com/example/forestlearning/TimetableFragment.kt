@@ -1,10 +1,11 @@
 package com.example.forestlearning
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.FragmentTimetableBinding
 
 class TimetableFragment : Fragment() {
@@ -17,23 +18,24 @@ class TimetableFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
 
-        val courseBtn = binding.courseButton
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        courseBtn.setOnClickListener {
-            // 프래그먼트 전환 코드
-            val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frameTimetable, CourseFragment())
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+
+        binding.courseButton.setOnClickListener {
+            findNavController().navigate(R.id.action_timetableFragment_to_courseFragment)
         }
 
-        return view
+        // navigation 폴더 안에 있는 nav_main.xml에서 action을 만들기
+        // action = fragment와 fragment 끼리 연결
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

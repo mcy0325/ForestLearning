@@ -7,7 +7,7 @@
         android:icon="@android:drawable/ic_menu_edit"
         android:title="todolist" />
     <item
-        android:id="@+id/timetableFragment2"
+        android:id="@+id/timetableFragment"
         android:icon="@android:drawable/ic_menu_recent_history"
         android:title="timetable" />
     <item

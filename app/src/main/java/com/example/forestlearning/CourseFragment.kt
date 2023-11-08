@@ -82,10 +82,9 @@ class CourseFragment : Fragment() {
                     }
                 }
 
-
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    courseYear = ""
+                override fun onNothingSelected(adapterView: AdapterView<*>?) {
+                    // 이 메서드는 아무것도 선택되지 않았을 때 호출됩니다.
+                    // 필요한 경우 여기에 코드를 추가할 수 있습니다.
                 }
             }
 

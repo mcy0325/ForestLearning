@@ -7,6 +7,22 @@
     android:orientation="vertical"
     tools:context=".CourseFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="120dp"
+        android:layout_height="48dp">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/design_default_color_background"
+            android:text="뒤로 가기"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <RadioGroup
         android:id="@+id/courseUniversityGroup"
         android:layout_width="200dp"
@@ -16,18 +32,18 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/undergraduate"
+            android:id="@+id/university"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="전공" />
+            android:text="학부" />
 
         <RadioButton
-            android:id="@+id/liberal"
+            android:id="@+id/graduate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="교양" />
+            android:text="대학원" />
 
     </RadioGroup>
 

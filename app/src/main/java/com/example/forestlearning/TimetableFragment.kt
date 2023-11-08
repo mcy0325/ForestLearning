@@ -24,7 +24,6 @@ class TimetableFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.courseButton.setOnClickListener {
             findNavController().navigate(R.id.action_timetableFragment_to_courseFragment)
         }

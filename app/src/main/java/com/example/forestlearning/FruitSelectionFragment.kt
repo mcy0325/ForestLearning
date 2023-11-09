@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.forestlearning.databinding.FragmentFruitSelectionBinding
+import com.example.forestlearning.databinding.FragmentSubjectadderBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +21,7 @@ private const val ARG_PARAM2 = "param2"
 class FruitSelectionFragment : Fragment() {
     private lateinit var binding: FragmentFruitSelectionBinding
     private lateinit var viewModel: StudytimeViewModel
-    private lateinit var subject: Subjects
+
 
     private var param1: String? = null
     private var param2: String? = null
@@ -39,21 +40,22 @@ class FruitSelectionFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding = FragmentFruitSelectionBinding.inflate(inflater, container, false)
-
+        val fruit = FragmentSubjectadderBinding.inflate(inflater, container, false)
         binding.apple.setOnClickListener {
-            subject.fruit = 1
+            fruit.fruitSelection.setImageResource(R.drawable.apple)
         }
 
         binding.banana.setOnClickListener {
-            subject.fruit = 2
+            fruit.fruitSelection.setImageResource(R.drawable.banana)
         }
 
         binding.grape.setOnClickListener {
-            subject.fruit = 3
+            fruit.fruitSelection.setImageResource(R.drawable.grape)
         }
 
         return binding.root
     }
+
 
     companion object {
         /**

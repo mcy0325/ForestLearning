@@ -42,14 +42,40 @@ class SubjectadderFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(StudytimeViewModel::class.java)
 
+        fruit_selection()
 
         binding.subjectAdderButton.setOnClickListener {
             val name = binding.subjectName.text.toString()
+            val info = binding.subjectInfo.text.toString()
+
+            add_subject(name, info)
         }
 
-        fruit_selection()
+
 
         return binding.root
+    }
+
+    private fun add_subject(name: String, info: String) {
+        val subject = Subjects(name, info)
+
+        viewModel.setSubject(subject)
+        fruit_check()
+    }
+
+
+    private fun fruit_check() {
+        when (binding.fruitSelection.id) {
+            R.id.apple -> {
+                viewModel.set_fruit(1)
+            }
+            R.id.banana -> {
+                viewModel.set_fruit(2)
+            }
+            R.id.grape -> {
+                viewModel.set_fruit(3)
+            }
+        }
     }
 
 

@@ -69,11 +69,9 @@ class SubjecttimerFragment : Fragment() {
                 val minutes = (seconds % 3600) / 60
                 val remainingSeconds = seconds % 60
 
-                subject.time.hour = hours
-                subject.time.minute = minutes
-                subject.time.sec = remainingSeconds
+                val time = Time(hours, minutes, remainingSeconds)
 
-                viewModel.updateSubject(subject)
+                viewModel.updatetime(time)
             }
 
             override fun onFinish() {

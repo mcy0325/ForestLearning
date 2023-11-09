@@ -33,7 +33,6 @@ class StudytimeFragment : Fragment() {
         }
 
 
-
         return binding.root
     }
 }

@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import com.example.forestlearning.databinding.FragmentSubjectadderBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,9 +17,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SubjectadderFragment : Fragment() {
-    private lateinit var binding: FragmentSubjectadderBinding
-    private lateinit var viewModel: StudytimeViewModel
-
+    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -38,24 +34,9 @@ class SubjectadderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentSubjectadderBinding.inflate(inflater, container, false)
-
-        viewModel = ViewModelProvider(requireActivity()).get(StudytimeViewModel::class.java)
-
-
-        binding.subjectAdderButton.setOnClickListener {
-            val name = binding.subjectName.text.toString()
-        }
-
-        return binding.root
+        return inflater.inflate(R.layout.fragment_subjectadder, container, false)
     }
 
-
-    private fun fruit_selection() {
-        binding.fruitSelection.setOnClickListener {
-            val fruit = binding.fruitSelection.selectedItem.toString()
-        }
-    }
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -11,6 +11,10 @@ android {
         enable = true
     }
 
+    dataBinding {
+        enable = true
+    }
+
     defaultConfig {
         applicationId = "com.example.forestlearning"
         minSdk = 24

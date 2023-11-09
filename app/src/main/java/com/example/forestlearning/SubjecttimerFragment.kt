@@ -1,12 +1,13 @@
 package com.example.forestlearning
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.example.forestlearning.databinding.FragmentSubjectadderBinding
+import com.example.forestlearning.databinding.FragmentSubjecttimerBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -15,11 +16,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SubjectadderFragment.newInstance] factory method to
+ * Use the [SubjecttimerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubjectadderFragment : Fragment() {
-    private lateinit var binding: FragmentSubjectadderBinding
+class SubjecttimerFragment : Fragment() {
+    private lateinit var binding: FragmentSubjecttimerBinding
+    private var countDownTimer: CountDownTimer? = null
+    private var isTimerRunning = false
+    private lateinit var subject: Subjects
     private lateinit var viewModel: StudytimeViewModel
 
     private var param1: String? = null
@@ -38,24 +42,46 @@ class SubjectadderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentSubjectadderBinding.inflate(inflater, container, false)
-
+        val binding = FragmentSubjecttimerBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(StudytimeViewModel::class.java)
-
-
-        binding.subjectAdderButton.setOnClickListener {
-            val name = binding.subjectName.text.toString()
-        }
+        timerstate()
 
         return binding.root
     }
 
-
-    private fun fruit_selection() {
-        binding.fruitSelection.setOnClickListener {
-            val fruit = binding.fruitSelection.selectedItem.toString()
+    private fun timerstate() {
+        binding.playButton.setOnClickListener {
+            if (isTimerRunning) {
+                countDownTimer?.cancel()
+                isTimerRunning = false
+            } else {
+                startTimer()
+                isTimerRunning = true
+            }
         }
     }
+
+    private fun startTimer() {
+        val timer = object : CountDownTimer(3600000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val seconds = millisUntilFinished / 1000
+                val hours = seconds / 3600
+                val minutes = (seconds % 3600) / 60
+                val remainingSeconds = seconds % 60
+
+                subject.time.hour = hours
+                subject.time.minute = minutes
+                subject.time.sec = remainingSeconds
+
+                viewModel.updateSubject(subject)
+            }
+
+            override fun onFinish() {
+
+            }
+        }
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -63,12 +89,12 @@ class SubjectadderFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SubjectadderFragment.
+         * @return A new instance of fragment SubjectimeFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SubjectadderFragment().apply {
+            SubjecttimerFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

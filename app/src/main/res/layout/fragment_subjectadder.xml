@@ -1,80 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_subjectadder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".SubjectadderFragment">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
 
-        <ImageView
-            android:id="@+id/main_subject_adder"
-            android:layout_width="match_parent"
-            android:layout_height="588dp"
-            android:src="@drawable/subject_adder" />
-
-        <ImageButton
-            android:id="@+id/subject_adder_button"
-            android:layout_width="200dp"
-            android:layout_height="64dp"
-            android:background="@drawable/add_button_subject"
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="302dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="245dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="125dp"
-                android:layout_marginTop="105dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="263dp"
-                    android:layout_height="60dp"
-                    android:id="@+id/subject_name"
-                    android:layout_marginTop="50dp"
-                    android:hint="과목명을 입력하세요"
-                    android:inputType="text"
-
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="245dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="125dp"
-                android:layout_marginTop="57dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="263dp"
-                    android:layout_height="60dp"
-                    android:id="@+id/subject_info"
-                    android:layout_marginTop="50dp"
-                    android:hint="추가 정보를 입력하세요"
-                    android:inputType="text"
-
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/fruit_selection"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="166dp"
-            android:layout_marginTop="358dp"
-            android:background="@color/white"
-            android:src="@drawable/apple_resize" />
-    </FrameLayout>
-
-
-</layout>
+</FrameLayout>

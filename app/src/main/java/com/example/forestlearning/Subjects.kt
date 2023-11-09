@@ -2,7 +2,7 @@ package com.example.forestlearning
 
 
 
-data class Subjects(val name: String, val fruit: Int, val info: String, val time: Time) {
+data class Subjects(val name: String, var fruit: Int, val info: String, val time: Time) {
 
 }
 

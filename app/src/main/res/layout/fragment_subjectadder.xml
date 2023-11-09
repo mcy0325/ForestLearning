@@ -64,17 +64,24 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/fruit_selection"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+        <LinearLayout
+            android:id="@+id/fruit_selection_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="166dp"
-            android:layout_marginTop="358dp"
-            android:background="@color/white"
-            android:src="@drawable/apple_resize" />
-    </FrameLayout>
+            android:layout_marginTop="356dp">
+
+            <ImageButton
+                android:id="@+id/fruit_selection"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:background="@color/white"
+                android:src="@drawable/apple_resize" />
+
+        </LinearLayout>
+            </FrameLayout>
 
 
 </layout>

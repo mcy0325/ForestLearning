@@ -12,11 +12,14 @@ import com.example.forestlearning.databinding.FragmentSignInBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 
 class SignInFragment : Fragment() {
 
     private var binding: FragmentSignInBinding? = null
     private var mAuth: FirebaseAuth? = null
+    private lateinit var mDbRef: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +28,9 @@ class SignInFragment : Fragment() {
 
         //인증 초기화
         mAuth = Firebase.auth
+
+        //db 초기화
+        mDbRef = Firebase.database.reference
 
         binding!!.signInEndButton.setOnClickListener {
             val name = binding!!.editName.text.toString().trim()
@@ -45,10 +51,16 @@ class SignInFragment : Fragment() {
                 binding?.signInEndButton?.setOnClickListener {
                     findNavController().navigate(R.id.action_loginFragment_to_signInFragment)
                 }
+                addUserToDatabase(name, email, mAuth!!.currentUser?.uid!!)
+
             } else {
                 // 회원가입 실패시 실행
                 Toast.makeText(requireContext(), "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun addUserToDatabase(name: String, email: String, uId: String) {
+        mDbRef.child("user").child(uId).setValue(UserData(name, email, uId))
     }
 }

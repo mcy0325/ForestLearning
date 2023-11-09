@@ -24,12 +24,11 @@ class TimetableFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //courseButton 클릭 시 courseFragment로 이동
         binding.courseButton.setOnClickListener {
             findNavController().navigate(R.id.action_timetableFragment_to_courseFragment)
         }
 
-        // navigation 폴더 안에 있는 nav_main.xml에서 action을 만들기
-        // action = fragment와 fragment 끼리 연결
     }
 
     override fun onDestroyView() {

@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
 
         //회원가입 버튼을 누르면 회원가입 화면으로 이동
         binding.signInButton.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_signInFragment)
+            findNavController().navigate(R.id.action_loginFragment2_to_signInFragment2)
         }
 
         mAuth = Firebase.auth
@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     // 로그인 성공시 실행
                     binding.loginButton.setOnClickListener {
-                        findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
+                        findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
                     }
                     Toast.makeText(requireContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
 

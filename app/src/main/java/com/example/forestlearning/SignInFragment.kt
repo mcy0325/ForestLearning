@@ -49,7 +49,7 @@ class SignInFragment : Fragment() {
                 Toast.makeText(requireContext(), "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
                 // 회원가입 완료 버튼 누르면 로그인 화면으로 이동
                 binding?.signInEndButton?.setOnClickListener {
-                    findNavController().navigate(R.id.action_loginFragment_to_signInFragment)
+                    findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
                 }
                 addUserToDatabase(name, email, mAuth!!.currentUser?.uid!!)
 

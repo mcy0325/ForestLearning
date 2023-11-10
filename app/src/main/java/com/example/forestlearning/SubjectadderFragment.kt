@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import com.example.forestlearning.databinding.FragmentSubjectadderBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,8 +39,6 @@ class SubjectadderFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentSubjectadderBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProvider(requireActivity()).get(StudytimeViewModel::class.java)
-
         fruit_selection()
 
         binding.subjectAdderButton.setOnClickListener {
@@ -50,8 +47,6 @@ class SubjectadderFragment : Fragment() {
 
             add_subject(name, info)
         }
-
-
 
         return binding.root
     }
@@ -96,7 +91,7 @@ class SubjectadderFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SubjectadderFragment.
+         * @return A new instance of fragment subjectadderFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.forestlearning.databinding.FragmentStudytimeBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +23,7 @@ private const val ARG_PARAM2 = "param2"
 class StudytimeFragment : Fragment() {
     private lateinit var binding: FragmentStudytimeBinding
     private lateinit var viewModel: StudytimeViewModel
+    private lateinit var recyclerView: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +44,15 @@ class StudytimeFragment : Fragment() {
                 .replace(R.id.subject_adder_view, subjectadderFragment)
                 .addToBackStack(null)
                 .commit()
+        }
+
+        recyclerView = binding.subjectScrollView
+
+        viewModel = ViewModelProvider(requireActivity()).get(StudytimeViewModel::class.java)
+
+        viewModel.getSubjectList().observe(viewLifecycleOwner) { subjectList ->
+            val adapter = StudytimeAdapter(subjectList)
+            recyclerView.adapter = adapter
         }
 
         return binding.root

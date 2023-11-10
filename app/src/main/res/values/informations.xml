@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="major">
+        <item>신소재공학과</item>
+        <item>항공우주공학과</item>
+        <item>기계공학학과</item>
+        <item>전기전자공학과</item>
+        <item>컴퓨터공학과</item>
+        <item>소프트웨어학과</item>
+        <item>스마트드론공학과</item>
+        <item>AI자율주행시스템공학과</item>
+        <item>항공운항학과</item>
+        <item>항공교통학과</item>
+        <item>물류학과</item>
+        <item>자유전공학부</item>
+        <item>항공우주및기계공학부</item>
+        <item>항공전자정보공학부</item>
+        <item>항공교통물류학부</item>
+    </string-array>
+    <string-array name="year">
+        <item>2022년</item>
+        <item>2023년</item>
+    </string-array>
+    <string-array name="term">
+        <item>1학기</item>
+        <item>2학기</item>
+    </string-array>
+    <string-array name="graduateArea">
+        <item>대학원전공준비중</item>
+    </string-array>
+    <string-array name="universityArea">
+        <item>전공</item>
+        <item>교양및기타</item>
+    </string-array>
+    <string-array name="graduateMajor">
+        <item>대학원학과준비중</item>
+    </string-array>
+    <string-array name="universityRefinementMajor">
+        <item>교양과목준비중</item>
+    </string-array>
+    <string-array name="universityMajor">
+        <item>신소재공학과</item>
+        <item>항공우주공학과</item>
+        <item>기계공학학과</item>
+        <item>전기전자공학과</item>
+        <item>컴퓨터공학과</item>
+        <item>소프트웨어학과</item>
+        <item>스마트드론공학과</item>
+        <item>AI자율주행시스템공학과</item>
+        <item>항공운항학과</item>
+        <item>항공교통학과</item>
+        <item>물류학과</item>
+        <item>자유전공학부</item>
+        <item>항공우주및기계공학부</item>
+        <item>항공전자정보공학부</item>
+        <item>항공교통물류학부</item>
+    </string-array>
+</resources>

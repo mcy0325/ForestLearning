@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "757054684803",
+    "project_id": "forestlearningaccout",
+    "storage_bucket": "forestlearningaccout.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757054684803:android:3a34f95d408b2ac1d5e5b6",
+        "android_client_info": {
+          "package_name": "com.example.forestlearning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEowOjlSYe1hc22BVZBolLScHqgPKx2dU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

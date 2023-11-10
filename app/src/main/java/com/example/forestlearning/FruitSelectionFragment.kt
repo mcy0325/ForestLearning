@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.forestlearning.databinding.FragmentFruitSelectionBinding
+import com.example.forestlearning.databinding.FragmentSubjectadderBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -13,11 +15,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SubjectimeFragment.newInstance] factory method to
+ * Use the [FruitSelectionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubjectimeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class FruitSelectionFragment : Fragment() {
+    private lateinit var binding: FragmentFruitSelectionBinding
+    private lateinit var viewModel: StudytimeViewModel
+
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -34,8 +39,23 @@ class SubjectimeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_subjectime, container, false)
+        val binding = FragmentFruitSelectionBinding.inflate(inflater, container, false)
+        val fruit = FragmentSubjectadderBinding.inflate(inflater, container, false)
+        binding.apple.setOnClickListener {
+            fruit.fruitSelection.setImageResource(R.drawable.apple)
+        }
+
+        binding.banana.setOnClickListener {
+            fruit.fruitSelection.setImageResource(R.drawable.banana)
+        }
+
+        binding.grape.setOnClickListener {
+            fruit.fruitSelection.setImageResource(R.drawable.grape)
+        }
+
+        return binding.root
     }
+
 
     companion object {
         /**
@@ -44,12 +64,12 @@ class SubjectimeFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SubjectimeFragment.
+         * @return A new instance of fragment FruitSelectionFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SubjectimeFragment().apply {
+            FruitSelectionFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

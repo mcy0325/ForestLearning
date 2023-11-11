@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.FragmentSignInBinding
 import com.google.firebase.Firebase
@@ -61,6 +60,6 @@ class SignInFragment : Fragment() {
     }
 
     private fun addUserToDatabase(name: String, email: String, uId: String) {
-        mDbRef.child("user").child(uId).setValue(UserData(name, email, uId))
+        mDbRef.child("user").child(uId).setValue(User(name, email, uId))
     }
 }

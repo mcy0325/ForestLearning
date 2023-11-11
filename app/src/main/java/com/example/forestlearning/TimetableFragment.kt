@@ -24,9 +24,9 @@ class TimetableFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //courseButton 클릭 시 courseFragment로 이동
-        binding.courseButton.setOnClickListener {
-            findNavController().navigate(R.id.action_timetableFragment_to_courseFragment)
+        //courseAddButton 클릭 시 courseAddFragment로 이동
+        binding.courseAddButton.setOnClickListener {
+            findNavController().navigate(R.id.action_timetableFragment_to_courseAddFragment)
         }
 
     }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forestlearning.databinding.FragmentStudytimeBinding
 
@@ -24,11 +25,15 @@ class StudytimeFragment : Fragment() {
     private lateinit var binding: FragmentStudytimeBinding
     private lateinit var viewModel: StudytimeViewModel
     private lateinit var recyclerView: RecyclerView
-
+    private var param1: String? = null
+    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
     }
 
     override fun onCreateView(
@@ -39,16 +44,13 @@ class StudytimeFragment : Fragment() {
         val binding = FragmentStudytimeBinding.inflate(inflater, container, false)
 
         binding.addbutton.setOnClickListener {
-            val subjectadderFragment = SubjectadderFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.subject_adder_view, subjectadderFragment)
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_studytimeFragment_to_subjectadderFragment)
         }
 
         recyclerView = binding.subjectScrollView
 
-        viewModel = ViewModelProvider(requireActivity()).get(StudytimeViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())
+            .get(StudytimeViewModel::class.java)
 
         viewModel.getSubjectList().observe(viewLifecycleOwner) { subjectList ->
             val adapter = StudytimeAdapter(subjectList)
@@ -57,6 +59,7 @@ class StudytimeFragment : Fragment() {
 
         return binding.root
     }
+
 
 
     companion object {
@@ -68,5 +71,14 @@ class StudytimeFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment studytimeFragment.
          */
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            FruitshowFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
     }
+
 }

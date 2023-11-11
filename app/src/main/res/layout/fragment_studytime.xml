@@ -83,10 +83,4 @@
         tools:ignore="SpeakableTextPresentCheck"
         android:background="@drawable/add_button" />
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/subject_adder_view"
-        android:name="com.example.forestlearning.SubjectadderFragment"/>
 </FrameLayout>

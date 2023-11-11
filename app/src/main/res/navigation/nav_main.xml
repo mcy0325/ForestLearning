@@ -35,7 +35,11 @@
         android:id="@+id/studytimeFragment"
         android:name="com.example.forestlearning.StudytimeFragment"
         android:label="fragment_studytime"
-        tools:layout="@layout/fragment_studytime" />
+        tools:layout="@layout/fragment_studytime" >
+        <action
+            android:id="@+id/action_studytimeFragment_to_subjectadderFragment"
+            app:destination="@id/subjectadderFragment" />
+    </fragment>
     <fragment
         android:id="@+id/todolistFragment"
         android:name="com.example.forestlearning.TodolistFragment"
@@ -85,4 +89,9 @@
             android:id="@+id/action_courseFragment_to_timetableFragment"
             app:destination="@id/timetableFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/subjectadderFragment"
+        android:name="com.example.forestlearning.SubjectadderFragment"
+        android:label="fragment_subjectadder"
+        tools:layout="@layout/fragment_subjectadder" />
 </navigation>

@@ -1,45 +1,32 @@
 package com.example.forestlearning
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import javax.security.auth.Subject
 
+
+
+class Time(var hour: Long, var minute: Long, var sec: Long)
+
 class StudytimeViewModel : ViewModel() {
-    private val subjectList = MutableLiveData<Array<Subjects>>()
-    private var subject: Subjects? = null
-    private var elapsedtime: Time = Time(0, 0, 0)
 
     private var totaltime =  MutableLiveData<Long>()
 
+    private val _subject_name = MutableLiveData<String>()
+    val subject_name: LiveData<String> get() = _subject_name
 
-    fun setSubjectList(subjects: Array<Subjects>) {
-        subjectList.value = subjects
-    }
+    private val _info = MutableLiveData<String>()
+    val info : LiveData<String> get() = _info
 
-    fun getSubjectList(): MutableLiveData<Array<Subjects>> {
-        return subjectList
-    }
+    private val _fruit = MutableLiveData<Int> ()
+    val fruit : LiveData<Int> get() = _fruit
 
-    fun setSubject(subject: Subjects) {
-        this.subject = subject
-        subjectList.value?.plus(subject)?.let { setSubjectList(it) }
-    }
+    private val _time = MutableLiveData(Time(0,0,0))
+    val time :LiveData<Time> get() = _time
 
-    fun set_fruit(fruit: Int) {
-        this.subject?.fruit = fruit
-    }
 
-    fun updatetime(time: Time) {
-        elapsedtime = time
-    }
 
-    fun getSubject(): Subjects? {
-        return subject
-    }
-
-    fun getElapsedtime(): Time {
-        return elapsedtime
-    }
 
     fun addTime(timeInSeconds: Long) {
         val currentTotalTime = totaltime.value ?: 0L

@@ -31,10 +31,10 @@ class SignInFragment : Fragment() {
         //db 초기화
         mDbRef = Firebase.database.reference
 
-        binding!!.signInEndButton.setOnClickListener {
-            val name = binding!!.editName.text.toString().trim()
-            val email = binding!!.editEmail.text.toString().trim()
-            val password = binding!!.editPassword.text.toString().trim()
+        binding?.signInEndButton?.setOnClickListener {
+            val name = binding?.editName?.text.toString().trim()
+            val email = binding?.editEmail?.text.toString().trim()
+            val password = binding?.editPassword?.text.toString().trim()
             signIn(name, email, password)
         }
 

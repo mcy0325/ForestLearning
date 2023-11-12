@@ -61,7 +61,19 @@
 
     <Spinner
         android:id="@+id/timeSpinner1"
-        android:layout_width="230dp"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.383" />
+
+    <Spinner
+        android:id="@+id/timeSpinner2"
+        android:layout_width="110dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,8 +111,20 @@
         app:layout_constraintVertical_bias="0.558" />
 
     <Spinner
-        android:id="@+id/timeSpinner2"
-        android:layout_width="230dp"
+        android:id="@+id/timeSpinner3"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.556" />
+
+    <Spinner
+        android:id="@+id/timeSpinner4"
+        android:layout_width="110dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -108,7 +132,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558" />
+        app:layout_constraintVertical_bias="0.556" />
 
     <EditText
         android:id="@+id/coursePlace2"

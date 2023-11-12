@@ -30,9 +30,9 @@ class TimetableFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.courseData.observe(viewLifecycleOwner) {
-            println("In TimeTabeFragment Data Change Observed!!")
+            println("In TimeTableFragment Data Change Observed!!")
 
-            tempCourseData.setData(it.courseName, it.teacherName, it.day1, it.time1, it.day2, it.time2)
+            tempCourseData.setData(it.courseName, it.teacherName, it.day1, it.time1, it.time2, it.day2, it.time3, it.time4)
             println("CourseName: ${tempCourseData.courseName}")
             println("TeacherName: ${tempCourseData.teacherName}")
             println("Day1: ${tempCourseData.day1}")

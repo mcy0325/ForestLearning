@@ -17,7 +17,7 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private var mAuth: FirebaseAuth? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,23 +25,23 @@ class LoginFragment : Fragment() {
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //회원가입 버튼을 누르면 회원가입 화면으로 이동
-        binding.signInButton.setOnClickListener {
+        binding?.signInButton?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment2_to_signInFragment2)
         }
 
         mAuth = Firebase.auth
 
         //로그인 버튼 이벤트
-        binding.loginButton.setOnClickListener {
-            val email = binding.inputEmail.text.toString().trim()
-            val password = binding.inputPassword.text.toString().trim()
+        binding?.loginButton?.setOnClickListener {
+            val email = binding?.inputEmail?.text.toString().trim()
+            val password = binding?.inputPassword?.text.toString().trim()
 
             login(email, password)
 
@@ -54,7 +54,7 @@ class LoginFragment : Fragment() {
         mAuth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // 로그인 성공시 실행
-                    binding.loginButton.setOnClickListener {
+                    binding?.loginButton?.setOnClickListener {
                         findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
                     }
                     Toast.makeText(requireContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()

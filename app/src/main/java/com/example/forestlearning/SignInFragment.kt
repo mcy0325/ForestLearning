@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.FragmentSignInBinding
 import com.google.firebase.Firebase
@@ -49,7 +48,7 @@ class SignInFragment : Fragment() {
                 Toast.makeText(requireContext(), "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
                 // 회원가입 완료 버튼 누르면 로그인 화면으로 이동
                 binding?.signInEndButton?.setOnClickListener {
-                    findNavController().navigate(R.id.action_loginFragment_to_signInFragment)
+                    findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
                 }
                 addUserToDatabase(name, email, mAuth!!.currentUser?.uid!!)
 
@@ -61,6 +60,6 @@ class SignInFragment : Fragment() {
     }
 
     private fun addUserToDatabase(name: String, email: String, uId: String) {
-        mDbRef.child("user").child(uId).setValue(UserData(name, email, uId))
+        mDbRef.child("user").child(uId).setValue(User(name, email, uId))
     }
 }

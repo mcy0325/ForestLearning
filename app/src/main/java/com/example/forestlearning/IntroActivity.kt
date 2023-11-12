@@ -11,7 +11,7 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_intro)
         val handler = Handler()
         handler.postDelayed({
-            val intent = Intent(applicationContext, MainActivity::class.java)
+            val intent = Intent(applicationContext, hostActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)

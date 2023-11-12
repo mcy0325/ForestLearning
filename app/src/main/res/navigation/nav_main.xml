@@ -46,27 +46,6 @@
         android:label="fragment_todolist"
         tools:layout="@layout/fragment_todolist" />
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.forestlearning.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_calendarFragment"
-            app:destination="@id/calendarFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signInFragment"
-        android:name="com.example.forestlearning.SignInFragment"
-        android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
-        <action
-            android:id="@+id/action_signInFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/todaytreeFragment"
         android:name="com.example.forestlearning.TodaytreeFragment"
         android:label="fragment_todaytree"
@@ -77,16 +56,16 @@
         android:label="fragment_timetable"
         tools:layout="@layout/fragment_timetable" >
         <action
-            android:id="@+id/action_timetableFragment_to_courseFragment"
-            app:destination="@id/courseFragment" />
+            android:id="@+id/action_timetableFragment_to_courseAddFragment"
+            app:destination="@id/courseAddFragment" />
     </fragment>
     <fragment
-        android:id="@+id/courseFragment"
-        android:name="com.example.forestlearning.CourseFragment"
-        android:label="fragment_course"
-        tools:layout="@layout/fragment_course" >
+        android:id="@+id/courseAddFragment"
+        android:name="com.example.forestlearning.CourseAddFragment"
+        android:label="fragment_course_add"
+        tools:layout="@layout/fragment_course_add" >
         <action
-            android:id="@+id/action_courseFragment_to_timetableFragment"
+            android:id="@+id/action_courseAddFragment_to_timetableFragment"
             app:destination="@id/timetableFragment" />
     </fragment>
     <fragment

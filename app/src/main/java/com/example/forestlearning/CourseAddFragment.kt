@@ -1,20 +1,22 @@
 package com.example.forestlearning
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.FragmentCourseAddBinding
-import com.example.forestlearning.databinding.FragmentLoginBinding
+import com.example.forestlearning.viewmodel.TimeTableViewModel
 
 class CourseAddFragment : Fragment() {
 
     private var _binding: FragmentCourseAddBinding? = null
     private val binding get() = _binding!!
+    val viewModel : TimeTableViewModel by activityViewModels()
 
     private lateinit var daySpinner1: Spinner
     private lateinit var daySpinner2: Spinner
@@ -29,19 +31,28 @@ class CourseAddFragment : Fragment() {
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        daySpinner1 = binding.daySpinner1
+        daySpinner2 = binding.daySpinner2
+        timeSpinner1 = binding.timeSpinner1
+        timeSpinner2 = binding.timeSpinner2
 
         //courseEndButton 클릭 시 timetableFragment로 이동
         binding.courseEndButton.setOnClickListener {
             findNavController().navigate(R.id.action_courseAddFragment_to_timetableFragment)
+
+            viewModel.setCourseData(
+                binding.courseName.text.toString(),
+                binding.teacherName.text.toString(),
+                daySpinner1.selectedItem.toString(),
+                timeSpinner1.selectedItem.toString(),
+                daySpinner2.selectedItem.toString(),
+                timeSpinner2.selectedItem.toString())
         }
 
-
-        daySpinner1 = view.findViewById(R.id.daySpinner1)!!
-        daySpinner2 = view.findViewById(R.id.daySpinner2)!!
-        timeSpinner1 = view.findViewById(R.id.timeSpinner1)!!
-        timeSpinner2 = view.findViewById(R.id.timeSpinner2)!!
 
         val dayAdapter1 = ArrayAdapter.createFromResource(requireActivity(), R.array.days, android.R.layout.simple_spinner_dropdown_item)
         val dayAdapter2 = ArrayAdapter.createFromResource(requireActivity(), R.array.days, android.R.layout.simple_spinner_dropdown_item)
@@ -54,6 +65,7 @@ class CourseAddFragment : Fragment() {
         timeSpinner2.adapter = timeAdapter2
 
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

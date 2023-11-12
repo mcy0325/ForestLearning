@@ -3,21 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/calendarFragment"
-        android:title="Calender" />
+        android:id="@+id/calendarFragement"
+        android:title="일정" />
     <item
         android:id="@+id/todolistFragment"
-        android:title="Todolist" />
+        android:title="오늘의 할 일" />
     <item
         android:id="@+id/studytimeFragment"
-        android:title="Studytime" />
+        android:title="공부 시간 기록" />
     <item
         android:id="@+id/todaytreeFragment"
-        android:title="Todaytree" />
+        android:title="오늘의 나무" />
     <item
         android:id="@+id/timetableFragment"
-        android:title="Timetable" />
+        android:title="나의 시간표" />
     <item
         android:id="@+id/fruitshowFragment"
-        android:title="Fruitshow" />
+        android:title="과일 주간 랭킹" />
 </menu>

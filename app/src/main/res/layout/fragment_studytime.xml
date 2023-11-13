@@ -18,8 +18,8 @@
 
             <ImageButton
                 android:id="@+id/move_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginLeft="11dp"
                 android:layout_marginTop="30dp"
                 android:adjustViewBounds="true"
@@ -60,20 +60,18 @@
                 android:text="00 : 00 : 00"
                 android:textSize="50sp" />
         </LinearLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/subject_scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="SpeakableTextPresentCheck"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/fragment_subjecttimer">
-        </androidx.recyclerview.widget.RecyclerView>
+            tools:listitem="@layout/fragment_subjecttimer"/>
 
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/addbutton"
+        android:id="@+id/add_Button_studytime"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignParentLeft="true"

@@ -3,13 +3,25 @@ package com.example.forestlearning
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.MutableData
+import com.google.firebase.database.core.Repo
 import javax.security.auth.Subject
 
 
 
-class Time(var hour: Long, var minute: Long, var sec: Long)
 
 class StudytimeViewModel : ViewModel() {
+
+    private val repo = Repo()
+
+    fun fetchData() : LiveData<MutableList<Subjects>> {
+        val mutableData = MutableLiveData<MutableList<Subjects>>()
+
+        repo.getData().observeForever {
+            mutableData.value = it
+        }
+        return mutableData
+    }
 
     private var totaltime =  MutableLiveData<Long>()
 
@@ -27,9 +39,16 @@ class StudytimeViewModel : ViewModel() {
 
 
 
-
     fun addTime(timeInSeconds: Long) {
         val currentTotalTime = totaltime.value ?: 0L
         totaltime.value = currentTotalTime + timeInSeconds
     }
+
+
+
+
+    fun updatetime(time : Time){
+        _time.value = time
+    }
+
 }

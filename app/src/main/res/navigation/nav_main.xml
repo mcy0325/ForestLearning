@@ -72,5 +72,9 @@
         android:id="@+id/subjectadderFragment"
         android:name="com.example.forestlearning.SubjectadderFragment"
         android:label="fragment_subjectadder"
-        tools:layout="@layout/fragment_subjectadder" />
+        tools:layout="@layout/fragment_subjectadder" >
+        <action
+            android:id="@+id/action_subjectadderFragment_to_studytimeFragment"
+            app:destination="@id/studytimeFragment" />
+    </fragment>
 </navigation>

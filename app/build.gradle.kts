@@ -57,4 +57,6 @@ dependencies {
     //11.08 bo 네비게이션, 캘린더뷰 라이브러리 추가
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
+
 }

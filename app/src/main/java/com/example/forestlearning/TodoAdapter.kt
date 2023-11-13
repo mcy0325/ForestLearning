@@ -3,33 +3,38 @@ package com.example.forestlearning
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.example.forestlearning.databinding.ItemTodoBinding
 
-class TodoAdapter : RecyclerView.Adapter<TodoAdapter.MyViewHolder>() {
-    private var todoList = emptyList<Todo>()
+class TodoAdapter : ListAdapter<Todo, TodoAdapter.ViewHolder>(DiffCallback()) {
 
-    class MyViewHolder(val binding: ItemTodoBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemTodoBinding.inflate(LayoutInflater.from(parent.context),parent, false)
-        return  MyViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = todoList[position]
-        val currentContent = currentItem.content
-        val currentCheck = currentItem.check
-
-        holder.binding.todoCheckBox.text = currentContent
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val toDoItem = getItem(position)
+        holder.bind(toDoItem)
     }
 
-    override fun getItemCount(): Int {
-        return todoList.size
+    class ViewHolder(private val binding: ItemTodoBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(toDoItem: Todo) {
+            binding.titleTextView.text = toDoItem.content
+            binding.checkbox.isChecked = toDoItem.check
+            // ToDo아이템의 나머지 데이터를 바인딩할 수 있음
+        }
     }
 
-    fun setData(todo : List<Todo>){
-        todoList = todo
-        notifyDataSetChanged()
-    }
+    private class DiffCallback : DiffUtil.ItemCallback<Todo>() {
+        override fun areItemsTheSame(oldItem: Todo, newItem: Todo): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(oldItem: Todo, newItem: Todo): Boolean {
+            return oldItem == newItem
+        }
+    }
 }

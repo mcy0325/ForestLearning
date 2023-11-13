@@ -30,22 +30,41 @@
         android:id="@+id/fruitshowFragment"
         android:name="com.example.forestlearning.FruitshowFragment"
         android:label="fragment_fruitshow"
-        tools:layout="@layout/fragment_fruitshow" />
+        tools:layout="@layout/fragment_fruitshow" >
+        <action
+            android:id="@+id/action_fruitshowFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
     <fragment
         android:id="@+id/studytimeFragment"
         android:name="com.example.forestlearning.StudytimeFragment"
         android:label="fragment_studytime"
-        tools:layout="@layout/fragment_studytime" />
+        tools:layout="@layout/fragment_studytime" >
+        <action
+            android:id="@+id/action_studytimeFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
     <fragment
         android:id="@+id/todolistFragment"
         android:name="com.example.forestlearning.TodolistFragment"
         android:label="fragment_todolist"
-        tools:layout="@layout/fragment_todolist" />
+        tools:layout="@layout/fragment_todolist" >
+        <action
+            android:id="@+id/action_todolistFragment_to_todoadderFragment"
+            app:destination="@id/todoadderFragment" />
+        <action
+            android:id="@+id/action_todolistFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
     <fragment
         android:id="@+id/todaytreeFragment"
         android:name="com.example.forestlearning.TodaytreeFragment"
         android:label="fragment_todaytree"
-        tools:layout="@layout/fragment_todaytree" />
+        tools:layout="@layout/fragment_todaytree" >
+        <action
+            android:id="@+id/action_todaytreeFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
     <fragment
         android:id="@+id/timetableFragment"
         android:name="com.example.forestlearning.TimetableFragment"
@@ -54,6 +73,9 @@
         <action
             android:id="@+id/action_timetableFragment_to_courseAddFragment"
             app:destination="@id/courseAddFragment" />
+        <action
+            android:id="@+id/action_timetableFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/courseAddFragment"
@@ -63,5 +85,19 @@
         <action
             android:id="@+id/action_courseAddFragment_to_timetableFragment"
             app:destination="@id/timetableFragment" />
+        <action
+            android:id="@+id/action_courseAddFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoadderFragment"
+        android:name="com.example.forestlearning.TodoadderFragment"
+        android:label="TodoadderFragment" >
+        <action
+            android:id="@+id/action_todoadderFragment_to_todolistFragment"
+            app:destination="@id/todolistFragment" />
+        <action
+            android:id="@+id/action_todoadderFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
 </navigation>

@@ -15,4 +15,9 @@ class TodoViewModel: ViewModel() {
         // LiveData를 통해 변경된 리스트를 UI로 전달
         toDoItemList.value = currentList
     }
+
+    fun updateTodoItems(newList: List<Todo>) {
+        // LiveData에 데이터를 설정하여 UI 갱신
+        toDoItemList.value = newList
+    }
 }

@@ -4,6 +4,7 @@
 
     <item
         android:id="@+id/calendarFragement"
+        android:icon="@android:drawable/btn_dialog"
         android:title="일정" />
     <item
         android:id="@+id/todolistFragment"

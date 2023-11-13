@@ -19,8 +19,7 @@ class MainActivity : AppCompatActivity(){
         val nevController = binding.frgNavi.getFragment<NavHostFragment>().navController
         appBarConfiguration = AppBarConfiguration(
            // nevController.graph, binding.drawerLayout
-            setOf(R.id.timetableFragment, R.id.fruitshowFragment,R.id.calendarFragment,
-                R.id.todaytreeFragment,R.id.studytimeFragment,R.id.todolistFragment),
+            setOf(R.id.calendarFragment,),
             binding.drawerLayout
         )
         setupActionBarWithNavController(nevController,appBarConfiguration)

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(){
         appBarConfiguration = AppBarConfiguration(
            // nevController.graph, binding.drawerLayout
             setOf(R.id.timetableFragment, R.id.fruitshowFragment,R.id.calendarFragment,
-                R.id.todaytreeFragment,R.id.studytimeFragment,R.id.todolistFragment),
+                R.id.todaytreeFragment,R.id.study_timeFragment,R.id.todolistFragment),
             binding.drawerLayout
         )
         setupActionBarWithNavController(nevController,appBarConfiguration)

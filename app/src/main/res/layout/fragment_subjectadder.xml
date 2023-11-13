@@ -75,13 +75,13 @@
             android:layout_marginLeft="166dp"
             android:layout_marginTop="356dp">
 
-            <ImageButton
+            <Spinner
                 android:id="@+id/fruit_selection"
+                android:entries="@array/fruit_array"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:background="@color/white"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:src="@drawable/apple_resize" />
+                android:background="@drawable/apple_resize"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
     </FrameLayout>

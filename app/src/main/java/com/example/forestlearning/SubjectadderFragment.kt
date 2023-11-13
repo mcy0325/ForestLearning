@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Spinner
 import com.example.forestlearning.databinding.FragmentSubjectadderBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -20,16 +22,12 @@ private const val ARG_PARAM2 = "param2"
 class SubjectadderFragment : Fragment() {
     private lateinit var binding: FragmentSubjectadderBinding
     private lateinit var viewModel: StudytimeViewModel
+    private lateinit var spinner: Spinner
 
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -39,68 +37,52 @@ class SubjectadderFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentSubjectadderBinding.inflate(inflater, container, false)
 
-        fruit_selection()
-
-        binding.subjectAdderButton.setOnClickListener {
-            val name = binding.subjectName.text.toString()
-            val info = binding.subjectInfo.text.toString()
-
-            add_subject(name, info)
-        }
-
-        return binding.root
-    }
-
-    private fun add_subject(name: String, info: String) {
-        val subject = Subjects(name, info)
-
-        viewModel.setSubject(subject)
-        fruit_check()
+        return binding?.root
     }
 
 
-    private fun fruit_check() {
-        when (binding.fruitSelection.id) {
-            R.id.apple -> {
-                viewModel.set_fruit(1)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        spinner = binding.fruitSelection
+
+        spinner.onItemSelectedListener = object : AdapterView
+                .OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedFruit = parent?.getItemAtPosition(position).toString()
+                updateFruitImage(selectedFruit)
             }
-            R.id.banana -> {
-                viewModel.set_fruit(2)
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                updateFruitImage("Apple")
             }
-            R.id.grape -> {
-                viewModel.set_fruit(3)
-            }
-        }
-    }
-
-
-    private fun fruit_selection() {
-        binding.fruitSelection.setOnClickListener {
-
-            val fruitSelectionFragment = FruitSelectionFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fruit_selection_view, fruitSelectionFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-    }
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment subjectadderFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SubjectadderFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
                 }
-            }
+
+
+        binding?.subjectAdderButton?.setOnClickListener {
+            val name = binding?.subjectName?.text.toString()
+            val info = binding?.subjectInfo?.text.toString()
+
+        }
+
     }
+    private fun updateFruitImage(selectedFruit: String) {
+        val drawableId = when (selectedFruit) {
+            "Apple" -> R.drawable.apple
+            "Banana" -> R.drawable.banana
+            "Grape" -> R.drawable.grape
+            else -> R.drawable.apple
+        }
+
+        binding?.fruitSelection?.setBackgroundResource(drawableId)
+    }
+
+
+
+
 }

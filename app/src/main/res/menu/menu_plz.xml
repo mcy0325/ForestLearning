@@ -9,7 +9,7 @@
         android:id="@+id/todolistFragment"
         android:title="오늘의 할 일" />
     <item
-        android:id="@+id/studytimeFragment"
+        android:id="@+id/study_timeFragment"
         android:title="공부 시간 기록" />
     <item
         android:id="@+id/todaytreeFragment"

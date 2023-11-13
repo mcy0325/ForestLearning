@@ -30,15 +30,14 @@ class TimetableFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.courseData.observe(viewLifecycleOwner) {
+
             println("In TimeTableFragment Data Change Observed!!")
 
             tempCourseData.setData(it.courseName, it.teacherName, it.day1, it.time1, it.time2, it.day2, it.time3, it.time4)
-            println("CourseName: ${tempCourseData.courseName}")
-            println("TeacherName: ${tempCourseData.teacherName}")
-            println("Day1: ${tempCourseData.day1}")
-            println("Time1: ${tempCourseData.time1}")
-            println("Day2: ${tempCourseData.day2}")
-            println("Time2: ${tempCourseData.time2}")
+            if(tempCourseData.day1 == "월" && tempCourseData.time1 == "09:00" && tempCourseData.time2 == "10:00") {
+                binding?.monday0?.text = tempCourseData.courseName
+                println("monday0: ${binding?.monday0?.text}")
+            }
         }
 
         //courseAddButton 클릭 시 courseAddFragment로 이동

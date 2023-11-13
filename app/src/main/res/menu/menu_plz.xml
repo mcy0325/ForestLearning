@@ -20,4 +20,7 @@
     <item
         android:id="@+id/fruitshowFragment"
         android:title="과일 주간 랭킹" />
+    <item
+        android:id="@+id/logoutFragment"
+        android:title="로그아웃" />
 </menu>

@@ -21,25 +21,19 @@
             app:destination="@id/todolistFragment" />
         <action
             android:id="@+id/action_calendarFragment_to_studytimeFragment"
-            app:destination="@id/studytimeFragment" />
+            app:destination="@id/study_timeFragment" />
         <action
             android:id="@+id/action_calendarFragment_to_timetableFragment2"
             app:destination="@id/timetableFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_study_timeFragment"
+            app:destination="@id/study_timeFragment" />
     </fragment>
     <fragment
         android:id="@+id/fruitshowFragment"
         android:name="com.example.forestlearning.FruitshowFragment"
         android:label="fragment_fruitshow"
         tools:layout="@layout/fragment_fruitshow" />
-    <fragment
-        android:id="@+id/studytimeFragment"
-        android:name="com.example.forestlearning.StudytimeFragment"
-        android:label="fragment_studytime"
-        tools:layout="@layout/fragment_studytime" >
-        <action
-            android:id="@+id/action_studytimeFragment_to_subjectadderFragment"
-            app:destination="@id/subjectadderFragment" />
-    </fragment>
     <fragment
         android:id="@+id/todolistFragment"
         android:name="com.example.forestlearning.TodolistFragment"
@@ -75,6 +69,18 @@
         tools:layout="@layout/fragment_subjectadder" >
         <action
             android:id="@+id/action_subjectadderFragment_to_studytimeFragment"
-            app:destination="@id/studytimeFragment" />
+            app:destination="@id/study_timeFragment" />
+        <action
+            android:id="@+id/action_subjectadderFragment_to_study_timeFragment"
+            app:destination="@id/study_timeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/study_timeFragment"
+        android:name="com.example.forestlearning.Study_timeFragment"
+        android:label="fragment_study_time"
+        tools:layout="@layout/fragment_study_time" >
+        <action
+            android:id="@+id/action_study_timeFragment_to_subjectadderFragment"
+            app:destination="@id/subjectadderFragment" />
     </fragment>
 </navigation>

@@ -3,7 +3,7 @@ package com.example.forestlearning
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class TodoViewModel: ViewModel() {
+class TodoViewModel: ViewModel() { //todo뷰모델
     val toDoItemList = MutableLiveData<List<Todo>>()
 
     // ToDo아이템을 추가하는 메서드

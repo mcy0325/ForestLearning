@@ -9,7 +9,7 @@ import com.example.forestlearning.databinding.FragmentTodoadderBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class TodoadderFragment : Fragment() {
+class TodoadderFragment : Fragment() { //사용자가 데이터 추가하는 프래그먼트
     private var _binding: FragmentTodoadderBinding? = null
     private val binding get() = _binding!!
     //추가

@@ -10,7 +10,7 @@
         android:id="@+id/todolistFragment"
         android:title="오늘의 할 일" />
     <item
-        android:id="@+id/studytimeFragment"
+        android:id="@+id/study_timeFragment"
         android:title="공부 시간 기록" />
     <item
         android:id="@+id/todaytreeFragment"
@@ -21,4 +21,7 @@
     <item
         android:id="@+id/fruitshowFragment"
         android:title="과일 주간 랭킹" />
+    <item
+        android:id="@+id/logoutFragment"
+        android:title="로그아웃" />
 </menu>

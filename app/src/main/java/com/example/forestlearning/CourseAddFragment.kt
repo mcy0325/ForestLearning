@@ -54,9 +54,11 @@ class CourseAddFragment : Fragment() {
                 daySpinner1.selectedItem.toString(),
                 timeSpinner1.selectedItem.toString(),
                 timeSpinner2.selectedItem.toString(),
+                binding?.coursePlace1?.text.toString(),
                 daySpinner2.selectedItem.toString(),
                 timeSpinner3.selectedItem.toString(),
-                timeSpinner4.selectedItem.toString())
+                timeSpinner4.selectedItem.toString(),
+                binding?.coursePlace2?.text.toString())
         }
 
         val dayAdapter1 = ArrayAdapter.createFromResource(requireActivity(), R.array.days, android.R.layout.simple_spinner_dropdown_item)

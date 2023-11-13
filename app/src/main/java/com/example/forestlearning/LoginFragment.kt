@@ -42,6 +42,7 @@ class LoginFragment : Fragment() {
         binding?.loginButton?.setOnClickListener {
             val email = binding?.inputEmail?.text.toString().trim()
             val password = binding?.inputPassword?.text.toString().trim()
+            findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
 
             login(email, password)
 
@@ -54,9 +55,6 @@ class LoginFragment : Fragment() {
         mAuth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // 로그인 성공시 실행
-                    binding?.loginButton?.setOnClickListener {
-                        findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
-                    }
                     Toast.makeText(requireContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
 
                 } else {

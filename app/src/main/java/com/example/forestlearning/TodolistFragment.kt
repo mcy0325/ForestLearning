@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forestlearning.databinding.FragmentTodolistBinding
 import com.example.forestlearning.databinding.FragmentTodoadderBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class TodolistFragment : Fragment() { //투두리스트 프래그먼트
@@ -29,6 +30,7 @@ class TodolistFragment : Fragment() { //투두리스트 프래그먼트
         binding = FragmentTodolistBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -76,32 +78,39 @@ class TodolistFragment : Fragment() { //투두리스트 프래그먼트
 
     // TodoAddFragment에서 데이터를 받아와서 처리하는 메서드
     fun onTodoItemAdded(todoItem: Todo) {
-        // 데이터를 ViewModel에 추가
-        viewModel.addTodoItem(todoItem)
+        // 데이터를 Firebase에 저장
+        val newTodoRef = databaseReference.push()
+        newTodoRef.setValue(todoItem)
 
-        // RecyclerView 갱신
-        toDoAdapter.notifyDataSetChanged()
+        // UI 갱신은 LiveData가 알아서 처리
     }
-    private fun loadTodoItems() {
-        // 데이터베이스에서 To-Do 아이템 목록 불러오기
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val toDoItems = mutableListOf<Todo>()
 
-                for (snapshot in dataSnapshot.children) {
-                    val todo = snapshot.getValue(Todo::class.java)
-                    if (todo != null) {
-                        toDoItems.add(todo)
+    private fun loadTodoItems() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+        //소름 수업에서 배웠던 let을 여기에 쓰네;;
+        uid?.let { userUid ->
+            val userDatabaseReference = databaseReference.child(userUid)
+
+            userDatabaseReference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val toDoItems = mutableListOf<Todo>()
+
+                    for (snapshot in dataSnapshot.children) {
+                        val todo = snapshot.getValue(Todo::class.java)
+                        if (todo != null) {
+                            toDoItems.add(todo)
+                        }
                     }
+
+                    // ViewModel을 통해 데이터 갱신
+                    viewModel.updateTodoItems(toDoItems)
                 }
 
-                // ViewModel을 통해 데이터 갱신
-                viewModel.updateTodoItems(toDoItems)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "Failed to read value.", error.toException())
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(TAG, "Failed to read value.", error.toException())
+                }
+            })
+        }
     }
 }

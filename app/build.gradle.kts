@@ -68,4 +68,6 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
 
+    implementation("androidx.multidex:multidex:2.0.1")
+
 }

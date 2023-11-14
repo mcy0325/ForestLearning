@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.FragmentSubjectAdderBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -66,19 +67,22 @@ class Subject_adderFragment : Fragment() {
             }
         }
 
-        binding?.addButtonSubject?.setOnClickListener {
-            if (binding?.subjectInfoInput?.text?.isEmpty() == true ||
-                binding?.subjectInfoInput?.text?.isEmpty() == true) {
+        binding.addButtonSubject.setOnClickListener {
+            if (binding.subjectInfoInput.text?.isEmpty() == true ||
+                binding.subjectInfoInput.text?.isEmpty() == true) {
                 Toast.makeText(requireContext(), "과목명과 info을 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
-                val temp = Subjects(/**binding?.subjectInfoInput?.text.toString(),
-                    binding?.subjectInfoInput?.text.toString(),
-                    when(binding?.fruitSelection?.selectedItem.toString()) {
-                        "Apple" -> 1
-                        "Banana" -> 2
-                        "Grape" -> 3
-                        else -> 1
-                    }**/"math", "math",1)
+                val viewModel = ViewModelProvider(requireActivity()).get(StudyTimeViewModel2::class.java)
+
+                val name :String = binding.subjectInfoInput.text.toString()
+                val info :String = binding.subjectInfoInput.text.toString()
+                val fruit :Int = when(binding?.fruitSelection?.selectedItem.toString()) {
+                    "Apple" -> 1
+                    "Banana" -> 2
+                    "Grape" -> 3
+                    else -> 1
+                }
+                val temp = Subjects(name, info, fruit, Time(0,0,0))
                 viewModel.add_subject(temp)
                 findNavController().navigate(R.id.action_subject_adderFragment_to_study_timeFragment)
             }

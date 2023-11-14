@@ -45,7 +45,7 @@ class CalendarFragment : Fragment() {
         calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
 
             //날짜 변수에 담기
-            var day: String = "${year}년 ${month}월 ${dayOfMonth}일"
+            var day: String = "${year}년 ${month+1}월 ${dayOfMonth}일" //+1추가
 
             //변수 텍스트뷰에 담기
             dayText?.text = day

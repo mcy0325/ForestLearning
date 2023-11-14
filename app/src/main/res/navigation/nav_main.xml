@@ -38,7 +38,11 @@
         android:id="@+id/todolistFragment"
         android:name="com.example.forestlearning.TodolistFragment"
         android:label="fragment_todolist"
-        tools:layout="@layout/fragment_todolist" />
+        tools:layout="@layout/fragment_todolist" >
+        <action
+            android:id="@+id/action_todolistFragment_to_todoadderFragment"
+            app:destination="@id/todoadderFragment" />
+    </fragment>
     <fragment
         android:id="@+id/todaytreeFragment"
         android:name="com.example.forestlearning.TodaytreeFragment"
@@ -73,6 +77,14 @@
         <action
             android:id="@+id/action_subjectadderFragment_to_study_timeFragment"
             app:destination="@id/study_timeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoadderFragment"
+        android:name="com.example.forestlearning.TodoadderFragment"
+        android:label="TodoadderFragment" >
+        <action
+            android:id="@+id/action_todoadderFragment_to_todolistFragment"
+            app:destination="@id/todolistFragment" />
     </fragment>
     <fragment
         android:id="@+id/study_timeFragment"

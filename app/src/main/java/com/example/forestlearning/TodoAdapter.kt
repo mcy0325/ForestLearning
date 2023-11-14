@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.forestlearning.databinding.ItemTodoBinding
 
-class TodoAdapter : ListAdapter<Todo, TodoAdapter.ViewHolder>(DiffCallback()) {
+class TodoAdapter : ListAdapter<Todo, TodoAdapter.ViewHolder>(DiffCallback()) { //어댑터
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)

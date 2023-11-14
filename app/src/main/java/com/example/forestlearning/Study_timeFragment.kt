@@ -35,7 +35,7 @@ class Study_timeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.addButton?.setOnClickListener{
-            findNavController().navigate(R.id.action_study_timeFragment_to_subjectadderFragment)
+            findNavController().navigate(R.id.action_study_timeFragment_to_subject_adderFragment)
         }
     }
 

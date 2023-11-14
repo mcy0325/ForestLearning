@@ -66,18 +66,7 @@
             android:id="@+id/action_courseAddFragment_to_timetableFragment"
             app:destination="@id/timetableFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/subjectadderFragment"
-        android:name="com.example.forestlearning.SubjectadderFragment"
-        android:label="fragment_subjectadder"
-        tools:layout="@layout/fragment_subjectadder" >
-        <action
-            android:id="@+id/action_subjectadderFragment_to_studytimeFragment"
-            app:destination="@id/study_timeFragment" />
-        <action
-            android:id="@+id/action_subjectadderFragment_to_study_timeFragment"
-            app:destination="@id/study_timeFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/todoadderFragment"
         android:name="com.example.forestlearning.TodoadderFragment"
@@ -91,8 +80,18 @@
         android:name="com.example.forestlearning.Study_timeFragment"
         android:label="fragment_study_time"
         tools:layout="@layout/fragment_study_time" >
+
         <action
-            android:id="@+id/action_study_timeFragment_to_subjectadderFragment"
-            app:destination="@id/subjectadderFragment" />
+            android:id="@+id/action_study_timeFragment_to_subject_adderFragment"
+            app:destination="@id/subject_adderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subject_adderFragment"
+        android:name="com.example.forestlearning.Subject_adderFragment"
+        android:label="fragment_subject_adder"
+        tools:layout="@layout/fragment_subject_adder" >
+        <action
+            android:id="@+id/action_subject_adderFragment_to_study_timeFragment"
+            app:destination="@id/study_timeFragment" />
     </fragment>
 </navigation>

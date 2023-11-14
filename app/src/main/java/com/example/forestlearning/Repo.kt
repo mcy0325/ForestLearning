@@ -7,12 +7,20 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Repo {
+
+    val database = Firebase.database
+    val db : FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    val subjectsMapRef = database.getReference("SubjectsMap")
+    val totaltimeRef = database.getReference("Totaltime")
+    val dayfruitRef = database.getReference("Dayfruit")
     fun getData() : LiveData<MutableList<Subjects>> {
 
         val mutableData = MutableLiveData<MutableList<Subjects>>()
-        val database = Firebase.database
+
         val myRef = database.getReference("Subjects")
 
         myRef.addValueEventListener((object : ValueEventListener {
@@ -37,5 +45,9 @@ class Repo {
             }
         }))
         return mutableData
+    }
+
+    fun postSubjects(newValue: MutableMap<String, MutableList<Subjects>>) {
+        subjectsMapRef.setValue(newValue)
     }
 }

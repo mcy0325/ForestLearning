@@ -14,14 +14,6 @@ class StudytimeViewModel : ViewModel() {
 
     private val repo = Repo()
 
-    fun fetchData() : LiveData<MutableList<Subjects>> {
-        val mutableData = MutableLiveData<MutableList<Subjects>>()
-
-        repo.getData().observeForever {
-            mutableData.value = it
-        }
-        return mutableData
-    }
 
     private var totaltime =  MutableLiveData<Long>()
 

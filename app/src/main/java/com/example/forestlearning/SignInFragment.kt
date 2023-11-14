@@ -38,7 +38,7 @@ class SignInFragment : Fragment() {
             signIn(name, email, password)
         }
 
-        return binding!!.root
+        return binding?.root
     }
 
     private fun signIn(name: String, email: String, password: String) {

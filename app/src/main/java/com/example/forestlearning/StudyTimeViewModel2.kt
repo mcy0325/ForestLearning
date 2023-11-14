@@ -61,4 +61,11 @@ class StudyTimeViewModel2 : ViewModel() {
     fun set_time(time : Time){
         _time.value = time
     }
+
+    fun update_time(time : Time){
+        _time.value = Time(
+            _time.value!!.hour + time.hour,
+            _time.value!!.minute + time.minute,
+            _time.value!!.sec + time.sec)
+    }
 }

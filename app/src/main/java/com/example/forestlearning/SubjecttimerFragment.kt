@@ -24,7 +24,7 @@ class SubjecttimerFragment : Fragment() {
     private var isTimerRunning = false
 
     private lateinit var binding: FragmentSubjecttimerBinding
-    private lateinit var viewModel: StudytimeViewModel
+    private lateinit var viewModel: StudyTimeViewModel2
     private var param1: String? = null
     private var param2: String? = null
 
@@ -42,10 +42,14 @@ class SubjecttimerFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding = FragmentSubjecttimerBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(StudytimeViewModel::class.java)
-        timerstate()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity())[StudyTimeViewModel2::class.java]
+        timerstate()
     }
 
     private fun timerstate() {
@@ -70,7 +74,7 @@ class SubjecttimerFragment : Fragment() {
 
                 val time = Time(hours, minutes, remainingSeconds)
 
-                viewModel.updatetime(time)
+                viewModel.update_time(time)
             }
 
             override fun onFinish() {

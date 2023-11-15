@@ -45,10 +45,11 @@ class UserRepository {
     }
 
     //로그인 시 realtime 으로 개인 정보 전달
-    fun postPrivacy(name: String, email: String, password: String) {
+    fun postUserInfo(name: String, email: String, password: String) {
         nameRef.setValue(name)
         emailRef.setValue(email)
         passwordRef.setValue(password)
     }
+
 
 }

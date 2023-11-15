@@ -17,4 +17,11 @@ class UserViewModel: ViewModel() {
         UserRepository().getRealTimeName(_name)
         UserRepository().getRealTimeEmail(_email)
     }
+
+    fun userInfo(name: String, email: String, password: String) {
+        _name.value = name
+        _email.value = email
+        _password.value = password
+        UserRepository().postUserInfo(_name.value.toString(), _email.value.toString(), _password.value.toString())
+    }
 }

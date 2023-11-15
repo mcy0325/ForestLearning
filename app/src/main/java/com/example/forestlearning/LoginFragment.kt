@@ -54,13 +54,14 @@ class LoginFragment : Fragment() {
             if (task.isSuccessful) {
                 // 로그인 성공시 실행
                 if (Authentication.checkLogin()) {
+                    // 이메일 인증이 된 경우
                     Authentication.email = email
-                    db.collection("Users").document(email).get()
-                        .addOnSuccessListener { documentSnapshot ->
-                            val name: String = documentSnapshot.get("Name") as String // 로그인 시 이름 가져오기
-                            viewModel.userInfo(email, password, name) // 뷰모델에 개인 정보 저장
-                            findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
-                        }
+                    db.collection("Users").document(email).get().addOnSuccessListener { documentSnapshot ->
+                        val name: String = documentSnapshot.get("Name") as String // 로그인 시 이름 가져오기
+                        viewModel.userInfo(email, password, name) // UserViewModel에 개인 정보 저장
+                        Toast.makeText(requireContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
+                    }
                 }
                 // 이메일 인증이 안 된 경우
                 else Toast.makeText(requireContext(), "이메일 인증에 실패했습니다.", Toast.LENGTH_SHORT).show()

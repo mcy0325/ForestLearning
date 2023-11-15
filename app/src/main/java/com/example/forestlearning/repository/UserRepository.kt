@@ -5,15 +5,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
 class UserRepository {
     val database = Firebase.database
-    val db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    //realtime에서 사용자 데이터를 가져올 변수들 email, password, name
+    //realtime에서 사용자 데이터를 가져올 변수들 name, email, password
     val nameRef = database.getReference("Name")
     val emailRef = database.getReference("Email")
     val passwordRef = database.getReference("Password")

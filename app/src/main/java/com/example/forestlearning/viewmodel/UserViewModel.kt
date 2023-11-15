@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.example.forestlearning.repository.UserRepository
 
 class UserViewModel: ViewModel() {
-    //내부적으로 바꿀수있는 라이브데이터
+    //내부적으로 바꿀 수 있는 라이브데이터
     private val _name = MutableLiveData("")
-    //하지만 밖에서는 바꿀 수 없는 라이브데이터
+    //밖에서는 바꿀 수 없는 라이브데이터
     val name : MutableLiveData<String> get() = _name
     val _email = MutableLiveData("")
     val email : MutableLiveData<String> get() = _email
@@ -18,6 +18,7 @@ class UserViewModel: ViewModel() {
         UserRepository().getRealTimeEmail(_email)
     }
 
+    //로그인 시 realtime 으로 개인 정보 전달
     fun userInfo(name: String, email: String, password: String) {
         _name.value = name
         _email.value = email

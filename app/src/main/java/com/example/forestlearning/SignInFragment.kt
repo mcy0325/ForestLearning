@@ -6,30 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.FragmentSignInBinding
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
+import com.example.forestlearning.viewmodel.UserViewModel
+import com.example.forestlearning.Authentication.Companion.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignInFragment : Fragment() {
 
     private var binding: FragmentSignInBinding? = null
-    private var mAuth: FirebaseAuth? = null
-    private lateinit var mDbRef: DatabaseReference
+    val viewModel: UserViewModel by activityViewModels()
+    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignInBinding.inflate(inflater)
-
-        //인증 초기화
-        mAuth = Firebase.auth
-
-        //db 초기화
-        mDbRef = Firebase.database.reference
+        binding = FragmentSignInBinding.inflate(inflater, container, false)
 
         binding?.signInEndButton?.setOnClickListener {
             val name = binding?.editName?.text.toString().trim()
@@ -42,24 +36,35 @@ class SignInFragment : Fragment() {
     }
 
     private fun signIn(name: String, email: String, password: String) {
-        mAuth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
+        auth.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                // 회원가입 성공시 실행
-                Toast.makeText(requireContext(), "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
-                // 회원가입 완료 버튼 누르면 로그인 화면으로 이동
-                binding?.signInEndButton?.setOnClickListener {
-                    findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
-                }
-                addUserToDatabase(name, email, mAuth!!.currentUser?.uid!!)
+                auth.currentUser?.sendEmailVerification()?.addOnCompleteListener { sendTask ->
+                    if (sendTask.isSuccessful) {
+                        //회원가입 성공시 실행
+                        Toast.makeText(requireContext(), "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
 
+                        val user = hashMapOf(
+                            "Name" to name
+                        )
+
+                        db.collection("Users").document(email).set(user)
+                        findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
+                    } else {
+                        Toast.makeText(requireContext(), "메일 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
+                    }
+                }
             } else {
-                // 회원가입 실패시 실행
                 Toast.makeText(requireContext(), "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
             }
+        }?.addOnFailureListener {
+            Toast.makeText(requireContext(), "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun addUserToDatabase(name: String, email: String, uId: String) {
-        mDbRef.child("user").child(uId).setValue(User(name, email, uId))
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
+
 }

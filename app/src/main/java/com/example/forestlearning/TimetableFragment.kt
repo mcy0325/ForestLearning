@@ -12,13 +12,6 @@ import com.example.forestlearning.viewmodel.TimeTableViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
-
-/*
-TODO: 현재 강의 데이터를 입력하면, 바로 observe 함수 안에서 강의 데이터를 시간표에 입력함!
-TODO: 그러기보다 SetLectureData(courseData: CourseData)와 같은 함수를 따로 만들어서,
- 강의 데이터를 입력하면 그때 함수를 호출해 시간표에 입력하도록 하자!
- */
-
 class TimetableFragment : Fragment() {
 
     private var _binding: FragmentTimetableBinding? = null

@@ -41,7 +41,7 @@ class SignInFragment : Fragment() {
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener { sendTask ->
                     if (sendTask.isSuccessful) {
                         //회원가입 성공시 실행
-                        Toast.makeText(requireContext(), "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "회원가입에 성공했습니다. 이메일 인증 후 로그인이 가능합니다.", Toast.LENGTH_SHORT).show()
 
                         val user = hashMapOf(
                             "Name" to name
@@ -50,7 +50,7 @@ class SignInFragment : Fragment() {
                         db.collection("Users").document(email).set(user)
                         findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
                     } else {
-                        Toast.makeText(requireContext(), "메일 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "이메일 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
                     }
                 }

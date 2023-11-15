@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
                     Authentication.email = email
                     db.collection("Users").document(email).get().addOnSuccessListener { documentSnapshot ->
                         val name: String = documentSnapshot.get("Name") as String // 로그인 시 이름 가져오기
-                        viewModel.userInfo(email, password, name) // UserViewModel에 개인 정보 저장
+                        viewModel.userInfo(name, email, password) // UserViewModel에 개인 정보 저장
                         Toast.makeText(requireContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
                     }

@@ -20,9 +20,6 @@
             android:id="@+id/action_calendarFragment_to_todolistFragment"
             app:destination="@id/todolistFragment" />
         <action
-            android:id="@+id/action_calendarFragment_to_studytimeFragment"
-            app:destination="@id/study_timeFragment" />
-        <action
             android:id="@+id/action_calendarFragment_to_timetableFragment2"
             app:destination="@id/timetableFragment" />
         <action

@@ -9,9 +9,9 @@ class UserViewModel: ViewModel() {
     private val _name = MutableLiveData("")
     //밖에서는 바꿀 수 없는 라이브데이터
     val name : MutableLiveData<String> get() = _name
-    val _email = MutableLiveData("")
+    private val _email = MutableLiveData("")
     val email : MutableLiveData<String> get() = _email
-    val _password = MutableLiveData("")
+    private val _password = MutableLiveData("")
 
     init { //앱 시작시 realtime 에서 사용자 데이터 가져오기
         UserRepository().getRealTimeName(_name)

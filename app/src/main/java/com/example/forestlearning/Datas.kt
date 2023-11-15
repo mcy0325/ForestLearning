@@ -1,5 +1,13 @@
 package com.example.forestlearning
 
+//사용자 데이터 클래스
+data class UserData(
+    var name: String? = null,
+    var email: String? = null,
+    var uId: String? = null
+){
+    constructor() : this(null, null, null)
+}
 data class CourseData(
     var courseName: String? = null,
     var teacherName: String? = null,

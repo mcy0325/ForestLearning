@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,42 +14,39 @@ import com.google.firebase.firestore.FirebaseFirestore
 class Repo {
 
     val database = Firebase.database
-    val db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    val subjectsMapRef = database.getReference("SubjectsMap")
+    val subjectsListRef = database.getReference("SubjectsList")
     val totaltimeRef = database.getReference("Totaltime")
     val dayfruitRef = database.getReference("Dayfruit")
-    fun getData() : LiveData<MutableList<Subjects>> {
 
-        val mutableData = MutableLiveData<MutableList<Subjects>>()
+    private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
 
-        val myRef = database.getReference("Subjects")
+    fun getSubjectsFromFirebase(): LiveData<MutableList<Subjects>>{
+        val subjectsLiveData = MutableLiveData<MutableList<Subjects>>()
 
-        myRef.addValueEventListener((object : ValueEventListener {
-            val listData : MutableList<Subjects> = mutableListOf<Subjects>()
+        databaseReference.child("SubjectsList").addListenerForSingleValueEvent(object  : ValueEventListener{
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()){
-                    listData.clear() // 실시간 데이터 업데이트시 리사이클뷰 데이터 중복방지
+                val subjectsList : MutableList<Subjects> = mutableListOf()
+                if (snapshot.exists()) {
+                    subjectsList.clear()
+                    for (subjectSnapshot in snapshot.children) {
+                        val getData = subjectSnapshot.getValue(Subjects::class.java)
+                        getData?.let { subjectsList.add(it) }
 
-                    for (userSnapshot in snapshot.children){
-                        val getData = userSnapshot.getValue((Subjects::class.java))
-                        listData.add(getData!!)
-
-                        mutableData.value = listData
-                    }
+                        }
                 }
+                subjectsLiveData.postValue(subjectsList)
             }
-
             override fun onCancelled(error: DatabaseError) {
-
-
             }
-        }))
-        return mutableData
+            })
+        return subjectsLiveData
+        }
+
+    fun saveSubjects(subjects: MutableList<Subjects>) {
+        subjectsListRef.push().setValue(subjects)
     }
 
-    fun postSubjects(newValue: MutableMap<String, MutableList<Subjects>>) {
-        subjectsMapRef.setValue(newValue)
-    }
 }

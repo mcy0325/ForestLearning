@@ -83,7 +83,7 @@ class Subject_adderFragment : Fragment() {
                     else -> 1
                 }
                 val temp = Subjects(name, info, fruit, Time(0,0,0))
-                viewModel.add_subject(temp)
+                viewModel.addSubjects(temp)
                 findNavController().navigate(R.id.action_subject_adderFragment_to_study_timeFragment)
             }
 

@@ -36,7 +36,7 @@ class UserViewModel : ViewModel() {
     }
 
     fun fetchUser(uid: String) {
-        // Firebase Realtime Database로부터 사용자 정보를 가져오는 로직을 여기에 구현합니다.
+        // Firebase Realtime Database로부터 사용자 정보를 가져오기
         val db = FirebaseDatabase.getInstance()
         db.getReference("Users").child(uid).addListenerForSingleValueEvent(object:
             ValueEventListener {
@@ -47,7 +47,6 @@ class UserViewModel : ViewModel() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Log the error or handle it appropriately.
             }
         })
     }

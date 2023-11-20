@@ -24,7 +24,6 @@ class TodoAdapter : ListAdapter<Todo, TodoAdapter.ViewHolder>(DiffCallback()) { 
         fun bind(toDoItem: Todo) {
             binding.titleTextView.text = toDoItem.content
             binding.checkbox.isChecked = toDoItem.check
-            binding.checkbox.text = toDoItem.content
             // ToDo아이템의 나머지 데이터를 바인딩할 수 있음
         }
     }

@@ -8,76 +8,49 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import kotlin.reflect.typeOf
 
 class TimetableRepository {
-    val db = FirebaseFirestore.getInstance()
+    private val db = FirebaseDatabase.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
-    private val _courses = MutableLiveData<List<CourseData>>()
-    val courses: LiveData<List<CourseData>> get() = _courses
+    fun getCourses(): LiveData<List<CourseData>> {
+        val userId = auth.currentUser?.uid ?: return MutableLiveData(emptyList())
+        val liveData = MutableLiveData<List<CourseData>>()
 
-    //getCourseData() 함수를 호출하면, 현재 로그인된 사용자의 UID를 가져와서
-    //그 UID에 해당하는 사용자의 시간표 데이터를 가져온다.
-    fun getCourseData() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val uid = currentUser?.uid
-        val courseList = mutableListOf<CourseData>()
-        uid?.let { userUid ->
-            db.collection("timetable").document(userUid).collection("courses")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        val course = document.toObject(CourseData::class.java)
-                        courseList.add(course)
-                    }
-                    _courses.value = courseList
+        db.reference.child("Courses").child(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //println("DEEEEEEEEEEEEEEEEEEEEEEEEEEBUG")
+                //println(snapshot.value)
+                //println(snapshot.value!!.javaClass)
+                val courses = snapshot.children.mapNotNull { CourseData(it.value as HashMap<String, String>) }
+                liveData.value = courses
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+        return liveData
+    }
+
+    fun addCourse(courseData: CourseData){
+        val userId = auth.currentUser?.uid ?: return
+        val courseId = db.reference.child("Courses").child(userId).push().key ?: return
+
+        if (courseId != null) {
+            db.reference.child("Courses").child(userId).child(courseId).setValue(courseData)
+                .addOnSuccessListener {
+                    Log.d("TimetableRepository", "addCourse: success")
                 }
-                .addOnFailureListener { exception ->
-                    Log.d("TAG", "Error getting documents: ", exception)
+                .addOnFailureListener {
+                    Log.d("TimetableRepository", "addCourse: failure")
                 }
         }
     }
-
-    //addCourseData() 함수를 호출하면, 현재 로그인된 사용자의 UID를 가져와서
-    //그 UID에 해당하는 사용자의 시간표 데이터를 추가한다.
-    fun addCourseData(course: CourseData) {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val uid = currentUser?.uid
-        uid?.let { userUid ->
-            db.collection("timetable").document(userUid).collection("courses")
-                .add(course)
-                .addOnSuccessListener { result ->
-                    Log.d("TAG", "DocumentSnapshot added with ID: ${result.id}")
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("TAG", "Error getting documents: ", exception)
-                }
-        }
-    }
-
-    //deleteCourseData() 함수를 호출하면, 현재 로그인된 사용자의 UID를 가져와서
-    //그 UID에 해당하는 사용자의 시간표 데이터를 모두 삭제한다.
-    fun deleteCourseData(courseName: String) {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val uid = currentUser?.uid
-        uid?.let { userUid ->
-            db.collection("timetable").document(userUid).collection("courses")
-                .whereEqualTo("courseName", courseName)
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        document.reference.delete()
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("TAG", "Error getting documents: ", exception)
-                }
-        }
-    }
-
-
-
 }

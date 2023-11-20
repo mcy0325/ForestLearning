@@ -46,8 +46,6 @@ class CourseAddFragment : Fragment() {
 
         //courseEndButton 클릭 시 timetableFragment로 이동
         binding?.courseEndButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_courseAddFragment_to_timetableFragment)
-
             viewModel.setCourseData(
                 binding?.courseName?.text.toString(),
                 binding?.teacherName?.text.toString(),
@@ -59,6 +57,8 @@ class CourseAddFragment : Fragment() {
                 timeSpinner3.selectedItem.toString(),
                 timeSpinner4.selectedItem.toString(),
                 binding?.coursePlace2?.text.toString())
+
+            findNavController().navigate(R.id.action_courseAddFragment_to_timetableFragment)
         }
 
         val dayAdapter1 = ArrayAdapter.createFromResource(requireActivity(), R.array.days, android.R.layout.simple_spinner_dropdown_item)
@@ -76,7 +76,6 @@ class CourseAddFragment : Fragment() {
         timeSpinner4.adapter = timeAdapter4
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

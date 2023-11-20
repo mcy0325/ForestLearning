@@ -23,6 +23,40 @@ class Repo {
 
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
 
+    fun getdayfruitFromFirebase(){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        val dayfruitMap = mutableMapOf<Int, Int>()
+        uid?.let { userUid ->
+            databaseReference.child(userUid)
+                .child("Dayfruit").addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (data in snapshot.children) {
+                            val dayfruit = data.getValue(Int::class.java)
+                            dayfruit?.let {
+                                dayfruitMap.put(data.key!!.toInt(),it)
+                            }
+                        }
+                        var viewModel = StudyTimeViewModel2()
+                        viewModel.update_todaytreefruit(dayfruitMap)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // Failed to read value
+                    }
+                })
+        }
+    }
+    fun updateSubjectsToFirebase(subjectsList: MutableList<Subjects>){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        uid?.let { userUid ->
+            databaseReference.child("SubjectsList")
+                .child(userUid).setValue(subjectsList)
+        }
+    }
     fun getSubjectsFromFirebase(){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
@@ -49,8 +83,5 @@ class Repo {
         }
         }
 
-    fun saveSubjects(subjects: MutableList<Subjects>) {
-        subjectsListRef.push().setValue(subjects)
-    }
 
 }

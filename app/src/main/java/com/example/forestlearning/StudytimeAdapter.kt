@@ -12,8 +12,15 @@ import com.example.forestlearning.databinding.FragmentSubjecttimerBinding
 
 
 
-class StudytimeAdapter : ListAdapter<Subjects, StudytimeAdapter.Holder>(DiffCallback()) {
+class StudytimeAdapter(
+    private val timerUpdateListener: TimerUpdateListener)
+    : ListAdapter<Subjects, StudytimeAdapter.Holder>(DiffCallback()) {
 
+    private var viewModel: StudyTimeViewModel2 = StudyTimeViewModel2()
+
+    interface TimerUpdateListener {
+        fun onTimerUpdate(position: Int, time: Time)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = FragmentSubjecttimerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return Holder(binding)
@@ -23,6 +30,9 @@ class StudytimeAdapter : ListAdapter<Subjects, StudytimeAdapter.Holder>(DiffCall
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val data = getItem(position)
         holder.bind(data)
+        holder.binding.playButton.setOnClickListener {
+            timerUpdateListener.onTimerUpdate(position, viewModel.currenttime.value!!)
+        }
     }
 
 

@@ -11,8 +11,8 @@ class StudyTimeViewModel2 : ViewModel() {
     private val repo = Repo()
 
 
-    private val _time = MutableLiveData(Time(0, 0, 0))
-    val time: LiveData<Time> get() = _time
+    private val _currenttime = MutableLiveData(Time(0, 0, 0))
+    val currenttime: LiveData<Time> get() = _currenttime
 
     val subjectsLiveList: LiveData<MutableList<Subjects>> get() = _subjectsLiveList
     private val _subjectsLiveList = MutableLiveData<MutableList<Subjects>>()
@@ -21,15 +21,15 @@ class StudyTimeViewModel2 : ViewModel() {
         return _subjectsLiveList
     }
 
-    val todaytreefruit: LiveData<MutableList<Int>> get() = _todaytreefruit
-    private val _todaytreefruit = MutableLiveData<MutableList<Int>>()
+    val todaytreefruit: LiveData<MutableMap<Int, Int>> get() = _todaytreefruit
+    private val _todaytreefruit = MutableLiveData<MutableMap<Int, Int>>()
 
-    fun gettodaytreefruit(): LiveData<MutableList<Int>> {
+    fun gettodaytreefruit(): LiveData<MutableMap<Int, Int>> {
         return _todaytreefruit
     }
 
-    fun update_todaytreefruit(newList: MutableList<Int>) {
-        _todaytreefruit.value = newList
+    fun update_todaytreefruit(newMap: MutableMap<Int, Int>) {
+        _todaytreefruit.value = newMap
     }
 
 
@@ -37,15 +37,23 @@ class StudyTimeViewModel2 : ViewModel() {
         val updateList = _subjectsLiveList.value ?: mutableListOf()
         updateList.add(subjects)
         _subjectsLiveList.value = updateList
-
+        repo.updateSubjectsToFirebase(updateList)
     }
 
     fun updateSubjects(newList: MutableList<Subjects>) {
         _subjectsLiveList.value = newList
     }
 
+    fun updatecurrenttime(time: Time) {
+        _currenttime.value = time
+    }
 
-    fun update_time(subjects: Subjects, time: Time) {
 
+    fun updateTime(position: Int, time: Time) {
+        val updateList = _subjectsLiveList.value ?: mutableListOf()
+        if (updateList != null && position < updateList.size) {
+            updateList[position].update_time(time)
+            _subjectsLiveList.value = updateList
+        }
     }
 }

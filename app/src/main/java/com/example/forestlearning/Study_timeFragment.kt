@@ -9,19 +9,18 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.forestlearning.databinding.FragmentStudyTimeBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class Study_timeFragment : Fragment() {
-    companion object {
-        fun newInstance() = Study_timeFragment()
-    }
 
     private lateinit var binding: FragmentStudyTimeBinding
-    private val viewModel: StudyTimeViewModel2 by lazy {
-        ViewModelProvider(this)[StudyTimeViewModel2::class.java]
-    }
+    private var viewModel: StudyTimeViewModel2 = StudyTimeViewModel2()
     private lateinit var adapter: StudytimeAdapter
-
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,23 +28,26 @@ class Study_timeFragment : Fragment() {
     ): View? {
         binding = FragmentStudyTimeBinding.inflate(inflater, container, false)
 
-        adapter = StudytimeAdapter(mutableListOf())
-        binding.studyTimeRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.studyTimeRecyclerView.adapter = adapter
-        viewModel.updateSujectsFromFirebase()
-
-
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.updateSujectsFromFirebase().observe(viewLifecycleOwner, Observer {
-            adapter.updateData(it)
-            adapter.notifyDataSetChanged()
+        databaseReference = FirebaseDatabase.getInstance().getReference("subjects")
+
+        viewModel = ViewModelProvider(requireActivity())[StudyTimeViewModel2::class.java]
+
+        recyclerView = binding.studyTimeRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        adapter = StudytimeAdapter()
+        recyclerView.adapter = adapter
+
+        viewModel.subjectsLiveList.observe(viewLifecycleOwner, Observer { newList ->
+            adapter.submitList(newList)
         })
 
+        Repo().getSubjectsFromFirebase()
 
         binding?.addButton?.setOnClickListener{
             findNavController().navigate(R.id.action_study_timeFragment_to_subject_adderFragment)

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.forestlearning.databinding.FragmentSubjecttimerBinding
+import kotlin.concurrent.timer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,12 +20,13 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SubjecttimerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubjecttimerFragment : Fragment() {
+class SubjecttimerFragment : Fragment(){
     private var countDownTimer: CountDownTimer? = null
     private var isTimerRunning = false
 
     private lateinit var binding: FragmentSubjecttimerBinding
-    private lateinit var viewModel: StudyTimeViewModel2
+    private var viewModel: StudyTimeViewModel2 = StudyTimeViewModel2()
+    private lateinit var StudytimeAdapter: StudytimeAdapter
     private var param1: String? = null
     private var param2: String? = null
 
@@ -49,22 +51,23 @@ class SubjecttimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity())[StudyTimeViewModel2::class.java]
-        timerstate()
+        timerstate(this.viewModel.getSubjectsList().value!![0])
     }
 
-    private fun timerstate() {
+
+    private fun timerstate(subject: Subjects) {
         binding.playButton.setOnClickListener {
             if (isTimerRunning) {
                 countDownTimer?.cancel()
                 isTimerRunning = false
             } else {
-                startTimer()
+                startTimer(subject)
                 isTimerRunning = true
             }
         }
     }
 
-    private fun startTimer() {
+    private fun startTimer(subject: Subjects) {
         val timer = object : CountDownTimer(3600000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = millisUntilFinished / 1000
@@ -74,7 +77,8 @@ class SubjecttimerFragment : Fragment() {
 
                 val time = Time(hours, minutes, remainingSeconds)
 
-                viewModel.update_time(time)
+                subject.update_time(time)
+                StudytimeAdapter.notifyDataSetChanged()
             }
 
             override fun onFinish() {
@@ -103,4 +107,6 @@ class SubjecttimerFragment : Fragment() {
                 }
             }
     }
+
+
 }

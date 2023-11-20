@@ -3,6 +3,7 @@ package com.example.forestlearning
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,27 +23,30 @@ class Repo {
 
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
 
-    fun getSubjectsFromFirebase(): LiveData<MutableList<Subjects>>{
-        val subjectsLiveData = MutableLiveData<MutableList<Subjects>>()
+    fun getSubjectsFromFirebase(){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
 
-        databaseReference.child("SubjectsList").addListenerForSingleValueEvent(object  : ValueEventListener{
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val subjectsList : MutableList<Subjects> = mutableListOf()
-                if (snapshot.exists()) {
-                    subjectsList.clear()
-                    for (subjectSnapshot in snapshot.children) {
-                        val getData = subjectSnapshot.getValue(Subjects::class.java)
-                        getData?.let { subjectsList.add(it) }
-
+        val subjectsList = mutableListOf<Subjects>()
+        uid?.let { userUid ->
+            databaseReference.child(userUid)
+                .child("SubjectsList").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (data in snapshot.children) {
+                        val subjects = data.getValue(Subjects::class.java)
+                        subjects?.let {
+                            subjectsList.add(it)
                         }
+                    }
+                    var viewModel = StudyTimeViewModel2()
+                    viewModel.updateSubjects(subjectsList)
                 }
-                subjectsLiveData.postValue(subjectsList)
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                }
             })
-        return subjectsLiveData
+        }
         }
 
     fun saveSubjects(subjects: MutableList<Subjects>) {

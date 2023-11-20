@@ -8,6 +8,8 @@ data class UserData(
 ){
     constructor() : this(null, null, null)
 }
+
+//강의 데이터 클래스
 data class CourseData(
     var courseName: String? = null,
     var teacherName: String? = null,

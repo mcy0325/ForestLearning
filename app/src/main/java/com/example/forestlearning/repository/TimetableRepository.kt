@@ -25,9 +25,6 @@ class TimetableRepository {
 
         db.reference.child("Courses").child(userId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                //println("DEEEEEEEEEEEEEEEEEEEEEEEEEEBUG")
-                //println(snapshot.value)
-                //println(snapshot.value!!.javaClass)
                 val courses = snapshot.children.mapNotNull { CourseData(it.value as HashMap<String, String>) }
                 liveData.value = courses
             }

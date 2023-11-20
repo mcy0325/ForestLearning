@@ -46,10 +46,8 @@ class TodoadderFragment : Fragment() { //사용자가 데이터 추가하는 프
                 val title = binding.titleEditText.text.toString()
                 //23.11.20 추가
                 val date = todoViewModel.getSelectedDate()
-                val newTodoRef = databaseReference.push() // 새로운 데이터베이스 레퍼런스 얻기?
-                val newTodoId = newTodoRef.key // 푸쉬를 사용하면 자동으로 id를 만든다고 함
                 // ToDo아이템을 TodoAdderFragment에서 받아오기
-                val newTodoItem = Todo(id = newTodoId, content = title, date = date)
+                val newTodoItem = Todo(content = title, date = date)
 
 
                 //23.11.20 추가
@@ -57,7 +55,7 @@ class TodoadderFragment : Fragment() { //사용자가 데이터 추가하는 프
                 todoViewModel.addTodoItemForSelectedDate(newTodoItem)
 
                 // Firebase Realtime Database에 데이터 업로드
-                //val newTodoRef = databaseReference.push()
+                val newTodoRef = databaseReference.push()
                 newTodoRef.setValue(newTodoItem)
 
                 // TodoadderFragment를 스택에서 제거하여 이전 화면으로 돌아가기

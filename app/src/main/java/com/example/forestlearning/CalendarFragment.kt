@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.ActivityMainBinding
 import com.example.forestlearning.databinding.FragmentCalendarBinding
@@ -15,6 +16,9 @@ import java.util.Date
 class CalendarFragment : Fragment() {
     var binding: FragmentCalendarBinding? = null
     //var dayText: String? = null
+    //23.11.20 추가
+    private lateinit var todoViewModel: TodoViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +45,16 @@ class CalendarFragment : Fragment() {
         //현재 날짜 담기
         dayText?.text = dateFormat.format(date)
 
+        //23.11.20 추가
+        todoViewModel = ViewModelProvider(requireActivity()).get(TodoViewModel::class.java)
+
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val selectedDate = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+            todoViewModel.setSelectedDate(selectedDate)
+        }
+
+
+    /*
         //CalendarView 날짜 변환 이벤트
         calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
 
@@ -50,7 +64,10 @@ class CalendarFragment : Fragment() {
             //변수 텍스트뷰에 담기
             dayText?.text = day
 
-        }
+        }*/
+
+
+
         /*
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)

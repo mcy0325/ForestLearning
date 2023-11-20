@@ -17,7 +17,6 @@ class TimetableFragment : Fragment() {
     private var _binding: FragmentTimetableBinding? = null
     private val binding get() = _binding
     val viewModel : TimeTableViewModel by activityViewModels()
-    private val tempCourseData : CourseData = CourseData()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,19 +90,6 @@ class TimetableFragment : Fragment() {
                 textView2?.text = "${course.courseName}\n${course.teacherName}\n${course.coursePlace2}"
             }
         }
-
-        /*viewModel.courseData.observe(viewLifecycleOwner) {
-
-            tempCourseData.setData(it.courseName, it.teacherName, it.day1, it.time1, it.time2, it.coursePlace1, it.day2, it.time3, it.time4, it.coursePlace2)
-
-            val key1 = "${it.day1}${it.time1}-${it.time2}"
-            val key2 = "${it.day2}${it.time3}-${it.time4}"
-            val textView1 = dayTimeMap[key1]
-            val textView2 = dayTimeMap[key2]
-
-            textView1?.text = "${it.courseName}\n${it.teacherName}\n${it.coursePlace1}"
-            textView2?.text = "${it.courseName}\n${it.teacherName}\n${it.coursePlace2}"
-        }*/
 
         //courseAddButton 클릭 시 courseAddFragment로 이동
         binding?.courseAddButton?.setOnClickListener {

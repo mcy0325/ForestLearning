@@ -13,7 +13,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CalendarFragment : Fragment() {
+class CalendarFragment : Fragment() { //캘린더 프래그먼트
     var binding: FragmentCalendarBinding? = null
     //var dayText: String? = null
     //23.11.20 추가

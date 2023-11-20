@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class TodoViewModel: ViewModel() {
+class TodoViewModel: ViewModel() { //투두 뷰모델
     val toDoItemList = MutableLiveData<List<Todo>>()
     //23.11.20 추가
     //투두리스트에 선택된 날짜 띄우기 위한 라이브데이ㅌ터

@@ -19,9 +19,6 @@ class TimetableFragment : Fragment() {
     val viewModel : TimeTableViewModel by activityViewModels()
     private val tempCourseData : CourseData = CourseData()
 
-    private var user = Firebase.auth.currentUser
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,7 +78,21 @@ class TimetableFragment : Fragment() {
             Pair("금17:00-18:00", binding?.friday8)
         )
 
-        viewModel.courseData.observe(viewLifecycleOwner) {
+        viewModel.courses.observe(viewLifecycleOwner) { courses ->
+            courses.forEach { course ->
+                // 첫 번째 시간대의 TextView 업데이트
+                val key1 = "${course.day1}${course.time1}-${course.time2}"
+                val textView1 = dayTimeMap[key1]
+                textView1?.text = "${course.courseName}\n${course.teacherName}\n${course.coursePlace1}"
+
+                // 두 번째 시간대의 TextView 업데이트
+                val key2 = "${course.day2}${course.time3}-${course.time4}"
+                val textView2 = dayTimeMap[key2]
+                textView2?.text = "${course.courseName}\n${course.teacherName}\n${course.coursePlace2}"
+            }
+        }
+
+        /*viewModel.courseData.observe(viewLifecycleOwner) {
 
             tempCourseData.setData(it.courseName, it.teacherName, it.day1, it.time1, it.time2, it.coursePlace1, it.day2, it.time3, it.time4, it.coursePlace2)
 
@@ -92,7 +103,7 @@ class TimetableFragment : Fragment() {
 
             textView1?.text = "${it.courseName}\n${it.teacherName}\n${it.coursePlace1}"
             textView2?.text = "${it.courseName}\n${it.teacherName}\n${it.coursePlace2}"
-        }
+        }*/
 
         //courseAddButton 클릭 시 courseAddFragment로 이동
         binding?.courseAddButton?.setOnClickListener {

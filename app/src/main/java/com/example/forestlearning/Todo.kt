@@ -5,8 +5,7 @@ package com.example.forestlearning
 data class Todo(
     val id: String = "",
     val check: Boolean = false,
-    val content: String = "",
-    val date: String = ""
+    val content: String = ""
 )/*{
     @PrimaryKey(autoGenerate = true) //null을 받으면 id 값을 자동으로 할당해줌
     var id = 0

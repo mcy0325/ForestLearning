@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.forestlearning.databinding.FragmentTodoadderBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -16,8 +15,6 @@ class TodoadderFragment : Fragment() { //사용자가 데이터 추가하는 프
     private val binding get() = _binding!!
     //추가
     private lateinit var databaseReference: DatabaseReference
-    //23.11.20 추가
-    private lateinit var todoViewModel: TodoViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,9 +25,7 @@ class TodoadderFragment : Fragment() { //사용자가 데이터 추가하는 프
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //23.11.20 추가
-        // ViewModel 초기화
-        todoViewModel = ViewModelProvider(requireActivity()).get(TodoViewModel::class.java)
+
         // 현재 로그인된 사용자의 UID 가져오기
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
@@ -40,28 +35,12 @@ class TodoadderFragment : Fragment() { //사용자가 데이터 추가하는 프
             // 사용자 별로 투두를 저장할 경로 설정
             databaseReference = FirebaseDatabase.getInstance().getReference("todos").child(userUid)
 
-            //val saveButton = binding.saveButton
-            //saveButton.setOnClickListener {
-            binding.saveButton.setOnClickListener {
+            val saveButton = binding.saveButton
+            saveButton.setOnClickListener {
                 val title = binding.titleEditText.text.toString()
-                //23.11.20 추가
-                val date = todoViewModel.getSelectedDate()
-                // ToDo아이템을 TodoAdderFragment에서 받아오기
-                val newTodoItem = Todo(content = title, date = date)
 
-
-                //23.11.20 추가
-                // 선택된 날짜에 대한 투두 아이템 추가
-                todoViewModel.addTodoItemForSelectedDate(newTodoItem)
-
-                // Firebase Realtime Database에 데이터 업로드
-                val newTodoRef = databaseReference.push()
-                newTodoRef.setValue(newTodoItem)
-
-                // TodoadderFragment를 스택에서 제거하여 이전 화면으로 돌아가기
-                parentFragmentManager.popBackStack()
-                /*
-
+                // ToDo아이템을 TodoAddFragment에서 받아오기
+                val newTodoItem = Todo(content = title)
 
                 // Firebase Realtime Database에 데이터 업로드
                 val newTodoRef = databaseReference.push()
@@ -69,8 +48,6 @@ class TodoadderFragment : Fragment() { //사용자가 데이터 추가하는 프
 
                 // TodoAddFragment를 스택에서 제거하여 이전 화면으로 돌아가기
                 parentFragmentManager.popBackStack()
-
-                 */
             }
         }
     }

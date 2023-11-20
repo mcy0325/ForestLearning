@@ -38,7 +38,7 @@ class TodolistFragment : Fragment() { //투두리스트 프래그먼트
         databaseReference = FirebaseDatabase.getInstance().getReference("todos")
 
         // ViewModel 초기화
-        viewModel = ViewModelProvider(this).get(TodoViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(TodoViewModel::class.java)
 
         // RecyclerView 설정
         recyclerView = binding.todoRecyclerView
@@ -90,7 +90,11 @@ class TodolistFragment : Fragment() { //투두리스트 프래그먼트
         val uid = currentUser?.uid
         //소름 수업에서 배웠던 let을 여기에 쓰네;;
         uid?.let { userUid ->
-            val userDatabaseReference = databaseReference.child(userUid)
+            //23.11.20 추가
+            // ViewModel에서 선택된 날짜 가져오기
+            val selectedDate = viewModel.getSelectedDate()
+            val userDatabaseReference = databaseReference.child(userUid).orderByChild("date").equalTo(selectedDate)
+            //val userDatabaseReference = databaseReference.child(userUid)
 
             userDatabaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -113,4 +117,11 @@ class TodolistFragment : Fragment() { //투두리스트 프래그먼트
             })
         }
     }
+
+    /*
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+     */
 }

@@ -17,7 +17,7 @@ import com.example.forestlearning.databinding.FragmentTodoadderBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class TodolistFragment : Fragment() { //투두리스트 프래그먼트
+class TodolistFragment : Fragment() {
     private lateinit var viewModel: TodoViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var toDoAdapter: TodoAdapter

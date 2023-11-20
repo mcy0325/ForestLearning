@@ -50,6 +50,11 @@ class TodolistFragment : Fragment() { //투두리스트 프래그먼트
         viewModel.toDoItemList.observe(viewLifecycleOwner, Observer { newList ->
             toDoAdapter.submitList(newList)
         })
+        //23.11.20
+        // 선택된 날짜를 표시
+        viewModel.selectedDateLiveData.observe(viewLifecycleOwner, Observer { date ->
+            binding.selectedDate.text = date
+        })
 
         // 데이터베이스에서 To-Do 아이템 불러오기
         loadTodoItems()

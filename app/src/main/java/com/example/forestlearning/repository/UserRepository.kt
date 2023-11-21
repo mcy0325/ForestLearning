@@ -11,7 +11,7 @@ import com.google.firebase.ktx.Firebase
 
 class UserRepository {
     val database = Firebase.database
-    val usersRef = database.getReference("Users")
+    private val usersRef = database.getReference("Users")
 
 
     fun getName(uid: String, name: MutableLiveData<String>) {

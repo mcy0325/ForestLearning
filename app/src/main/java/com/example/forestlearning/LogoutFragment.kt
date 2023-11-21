@@ -18,7 +18,14 @@ class LogoutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLogoutBinding.inflate(inflater, container, false)
-        binding?.txtName?.text = viewModel.name.value
+
+        val uid = Authentication.auth.currentUser?.uid
+        if (uid != null) {
+            viewModel.fetchUser(uid)
+        }
+        viewModel.name.observe(viewLifecycleOwner){ newName ->
+            binding?.txtName?.text = "$newName 님"
+        }
 
         binding?.logoutButton?.setOnClickListener {
             Authentication.auth.signOut()

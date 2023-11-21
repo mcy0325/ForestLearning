@@ -1,5 +1,7 @@
 package com.example.forestlearning
 
+
+
 data class Subjects(
     val name : String = "",
     val info : String = "",
@@ -12,10 +14,14 @@ data class Subjects(
         this.time.sec += timeupdate.sec
     }
 
-    //fun treegetFruit() : Int{
-        //if (this.time.hour)
 
-    //}
+    fun treegetFruit() : Int{
+        var count =0
+        if (this.time.minute >= 60){
+            count += 1
+        }
+        return count
+    }
 }
 
-class Time(var hour: Long=0, var minute: Long=0, var sec: Long=0)
+class Time(var hour: Int=0, var minute: Int=0, var sec: Int=0)

@@ -1,23 +1,40 @@
+//투두캘린더프래그먼트
 package com.example.forestlearning
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.forestlearning.databinding.ActivityMainBinding
 import com.example.forestlearning.databinding.FragmentCalendarBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CalendarFragment : Fragment() { //캘린더 프래그먼트
+class CalendarFragment : Fragment() {
     var binding: FragmentCalendarBinding? = null
+
     //var dayText: String? = null
     //23.11.20 추가
     private lateinit var todoViewModel: TodoViewModel
+    //23.11.21 추가
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var toDoAdapter: TodoAdapter
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,48 +70,78 @@ class CalendarFragment : Fragment() { //캘린더 프래그먼트
             todoViewModel.setSelectedDate(selectedDate)
         }
 
+        //23.11.21 추가
+        // Firebase 데이터베이스 참조
+        databaseReference = FirebaseDatabase.getInstance().getReference("todos")
 
-    /*
-        //CalendarView 날짜 변환 이벤트
-        calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+        // ViewModel 초기화
+        todoViewModel = ViewModelProvider(requireActivity()).get(TodoViewModel::class.java)
 
-            //날짜 변수에 담기
-            var day: String = "${year}년 ${month+1}월 ${dayOfMonth}일" //+1추가
+        // RecyclerView 설정
+        recyclerView = binding!!.CalendarRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        toDoAdapter = TodoAdapter()
+        recyclerView.adapter = toDoAdapter
 
-            //변수 텍스트뷰에 담기
-            dayText?.text = day
+        // ViewModel에서 LiveData를 관찰하여 데이터 변경을 감지하고 UI 갱신
+        todoViewModel.toDoItemList.observe(viewLifecycleOwner, Observer { newList ->
+            toDoAdapter.submitList(newList)
+        })
 
-        }*/
+        //23.11.21
+        // 선택된 날짜를 표시
+        todoViewModel.selectedDateLiveData.observe(viewLifecycleOwner, Observer { date ->
+            binding?.dayText?.text = date
+        })
 
+        // 데이터베이스에서 To-Do 아이템 불러오기
+        loadTodoItems()
 
 
         /*
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            arguments?.let {
-                param1 = it.getString(ARG_PARAM1)
-                param2 = it.getString(ARG_PARAM2)
-            }
-        }
-        */
-        /*
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCalendarBinding.inflate(inflater)
-        return binding?.root
-    }*/
-        /*
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+            //CalendarView 날짜 변환 이벤트
+            calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
 
-        binding?.btnAbout?.setOnClickListener{
-            findNavController()
-        }
+                //날짜 변수에 담기
+                var day: String = "${year}년 ${month+1}월 ${dayOfMonth}일" //+1추가
+
+                //변수 텍스트뷰에 담기
+                dayText?.text = day
+
+            }*/
     }
-    버튼 클릭 이벤트
- */
+    //23.11.21 추가
+    private fun loadTodoItems() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+        //소름 수업에서 배웠던 let을 여기에 쓰네;;
+        uid?.let { userUid ->
+            //23.11.20 추가
+            // ViewModel에서 선택된 날짜 가져오기
+            val selectedDate = todoViewModel.getSelectedDate()
+            val userDatabaseReference = databaseReference.child(userUid).orderByChild("date").equalTo(selectedDate)
+            //val userDatabaseReference = databaseReference.child(userUid)
+
+            userDatabaseReference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val toDoItems = mutableListOf<Todo>()
+
+                    for (snapshot in dataSnapshot.children) {
+                        val todo = snapshot.getValue(Todo::class.java)
+                        if (todo != null) {
+                            toDoItems.add(todo)
+                        }
+                    }
+
+                    // ViewModel을 통해 데이터 갱신
+                    todoViewModel.updateTodoItems(toDoItems)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
+                }
+            })
+        }
     }
 
     override fun onDestroy() {

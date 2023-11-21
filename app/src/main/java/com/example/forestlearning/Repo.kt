@@ -30,23 +30,32 @@ class Repo {
     val todaydate: LocalDate = LocalDate.now()
 
 
-    fun getdayfruitFromFirebase(){
+    fun updatefruitToFirebase(updatefruit: MutableMap<Int, Int>){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
 
-        val dayfruitMap = mutableMapOf<Int, Int>()
         uid?.let { userUid ->
-            databaseReference.child(userUid)
-                .child("Dayfruit").addValueEventListener(object : ValueEventListener {
+            databaseReference.child("Users").child(userUid)
+                .child("Dayfruit").child(todaydate.toString()).setValue(updatefruit)
+        }
+    }
+    fun getdayfruitFromFirebase(fruitMap: MutableLiveData<MutableMap<Int, Int>>){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        uid?.let { userUid ->
+            databaseReference.child("Users").child(userUid)
+                .child("Dayfruit").child(todaydate.toString())
+                .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
+                        val dayfruitMap = mutableMapOf<Int, Int>()
                         for (data in snapshot.children) {
                             val dayfruit = data.getValue(Int::class.java)
                             dayfruit?.let {
                                 dayfruitMap.put(data.key!!.toInt(),it)
                             }
                         }
-                        var viewModel = StudyTimeViewModel2()
-                        viewModel.update_todaytreefruit(dayfruitMap)
+                        fruitMap.postValue(dayfruitMap)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -63,6 +72,7 @@ class Repo {
             subjectsListRef.child(userUid).child(todaydate.toString()).setValue(subjectsList)
         }
     }
+
     fun getSubjectsFromFirebase(
         subjectList: MutableLiveData<MutableList<Subjects>>){
 
@@ -70,7 +80,7 @@ class Repo {
         val uid = currentUser?.uid
 
         uid?.let { userUid ->
-            subjectsListRef.child(userUid)
+            subjectsListRef.child(userUid).child(todaydate.toString())
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val subjectsList = mutableListOf<Subjects>()

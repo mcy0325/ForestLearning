@@ -36,7 +36,7 @@ data class CourseData(
     }
 }
 
-// 주간 랭킹을 위한 데이터 클래스
+// 누적 랭킹을 위한 데이터 클래스
 data class FruitShowData(
     var nickname : String? = null,
     var fruitnum : Int = 0)

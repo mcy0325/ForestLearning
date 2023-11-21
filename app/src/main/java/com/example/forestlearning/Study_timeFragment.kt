@@ -1,11 +1,13 @@
 package com.example.forestlearning
 
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,9 +17,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class Study_timeFragment : Fragment(), StudytimeAdapter.TimerUpdateListener {
+class Study_timeFragment : Fragment() {
 
     private lateinit var binding: FragmentStudyTimeBinding
+    @RequiresApi(Build.VERSION_CODES.O)
     private var viewModel: StudyTimeViewModel2 = StudyTimeViewModel2()
     private lateinit var adapter: StudytimeAdapter
     private lateinit var recyclerView: RecyclerView
@@ -32,11 +35,9 @@ class Study_timeFragment : Fragment(), StudytimeAdapter.TimerUpdateListener {
         return binding?.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val userUid = currentUser?.uid
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("subjects")
@@ -45,23 +46,17 @@ class Study_timeFragment : Fragment(), StudytimeAdapter.TimerUpdateListener {
 
         recyclerView = binding.studyTimeRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = StudytimeAdapter(this)
+        adapter = StudytimeAdapter()
         recyclerView.adapter = adapter
 
         viewModel.subjectsLiveList.observe(viewLifecycleOwner, Observer { newList ->
             adapter.submitList(newList)
         })
 
-        Repo().getSubjectsFromFirebase()
-
         binding?.addButton?.setOnClickListener{
             findNavController().navigate(R.id.action_study_timeFragment_to_subject_adderFragment)
         }
     }
 
-    override fun onTimerUpdate(position: Int, time: Time) {
-        viewModel.updateTime(position, time)
-        adapter.notifyItemChanged(position)
-    }
 
 }

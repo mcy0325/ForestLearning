@@ -1,11 +1,14 @@
 package com.example.forestlearning
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 class StudyTimeViewModel2 : ViewModel() {
 
     private val repo = Repo()
@@ -17,6 +20,11 @@ class StudyTimeViewModel2 : ViewModel() {
     val subjectsLiveList: LiveData<MutableList<Subjects>> get() = _subjectsLiveList
     private val _subjectsLiveList = MutableLiveData<MutableList<Subjects>>()
 
+    val subjectsList: MutableList<Subjects> get() = _subjectsList
+    private val _subjectsList = mutableListOf<Subjects>()
+    init {
+        repo.getSubjectsFromFirebase(_subjectsLiveList)
+    }
     fun getSubjectsList(): LiveData<MutableList<Subjects>> {
         return _subjectsLiveList
     }
@@ -47,7 +55,6 @@ class StudyTimeViewModel2 : ViewModel() {
     fun updatecurrenttime(time: Time) {
         _currenttime.value = time
     }
-
 
     fun updateTime(position: Int, time: Time) {
         val updateList = _subjectsLiveList.value ?: mutableListOf()

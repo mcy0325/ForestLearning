@@ -4,7 +4,7 @@ data class Subjects(
     val name : String = "",
     val info : String = "",
     val fruit : Int = 0,
-    val time : Time = Time(0,0,0)
+    var time : Time = Time(0,0,0)
 ){
     fun update_time(timeupdate : Time){
         this.time.hour += timeupdate.hour
@@ -18,4 +18,4 @@ data class Subjects(
     //}
 }
 
-class Time(var hour: Long, var minute: Long, var sec: Long)
+class Time(var hour: Long=0, var minute: Long=0, var sec: Long=0)

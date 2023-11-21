@@ -38,6 +38,7 @@ class StudytimeAdapter()
         if (position != -1) {
             viewModel.updateTime(position, data.time)
         }
+        viewModel.update_todaytreefruit(position, data.time.hour)
     }
 
     class Holder(val binding: FragmentSubjecttimerBinding) : RecyclerView.ViewHolder(binding.root) {

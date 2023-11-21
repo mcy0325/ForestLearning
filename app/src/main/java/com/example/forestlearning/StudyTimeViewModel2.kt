@@ -33,8 +33,6 @@ class StudyTimeViewModel2 : ViewModel() {
         return _subjectsLiveList
     }
 
-
-
     fun gettodaytreefruit(): LiveData<MutableMap<Int, Int>> {
         return _todaytreefruit
     }
@@ -47,7 +45,8 @@ class StudyTimeViewModel2 : ViewModel() {
         val updateMap = _todaytreefruit.value ?: mutableMapOf()
         updateMap[position] = fruit
         _todaytreefruit.value = updateMap
-        repo.updatefruitToFirebase(updateMap)
+        val updateFirebaseMap = updateMap.mapKeys { it.key.toString() }.toMutableMap()
+        repo.updatefruitToFirebase(updateFirebaseMap)
     }
     fun addSubjects(subjects: Subjects) {
         val updateList = _subjectsLiveList.value ?: mutableListOf()

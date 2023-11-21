@@ -30,7 +30,7 @@ class Repo {
     val todaydate: LocalDate = LocalDate.now()
 
 
-    fun updatefruitToFirebase(updatefruit: MutableMap<Int, Int>){
+    fun updatefruitToFirebase(updatefruit: MutableMap<String, Int>){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
 
@@ -52,7 +52,9 @@ class Repo {
                         for (data in snapshot.children) {
                             val dayfruit = data.getValue(Int::class.java)
                             dayfruit?.let {
-                                dayfruitMap.put(data.key!!.toInt(),it)
+                                data.key?.toIntOrNull()?.let { key ->
+                                    dayfruitMap.put(key, it)
+                                }
                             }
                         }
                         fruitMap.postValue(dayfruitMap)

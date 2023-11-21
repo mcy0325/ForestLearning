@@ -4,32 +4,39 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forestlearning.databinding.FruitshowListBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FruitshowAdapter : RecyclerView.Adapter<FruitshowAdapter.Holder>() {
     //리사이클러뷰로 출력할 데이터 받는 곳
     val fruitData : ArrayList<FruitShowData> = arrayListOf()
 
-    //firestore database에서 데이터 불러오기 위해 선언
-    val db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    // Realtime Database에서 데이터를 불러오기 위해 선언
+    val db : DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
     //목록 띄우기
-
     init {
-        db.collection("Users").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            fruitData.clear()
-            //fruitData에 firestore 정보 넣기
-            if (querySnapshot != null) {
-                for(snapshot in querySnapshot.documents) {
-                    val item = snapshot.toObject(FruitShowData::class.java)
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                fruitData.clear()
+                for(snapshot in dataSnapshot.children) {
+                    val item = snapshot.getValue(FruitShowData::class.java)
                     if (item != null) {
                         fruitData.add(item)
                     }
                 }
+                fruitData.sortByDescending { it.fruitnum }
+                notifyDataSetChanged()
             }
 
-            fruitData.sortByDescending { it.fruitnum }
-        }
+            override fun onCancelled(databaseError: DatabaseError) {
+                // 데이터를 가져오는데 실패했을 때 처리하는 코드
+            }
+        })
     }
 
     //검색 기능 구현 함수

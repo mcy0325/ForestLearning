@@ -21,11 +21,6 @@ class UserViewModel : ViewModel() {
 
     val uid: LiveData<String> get() = _uid
 
-    init {
-        repository.getName(_name)
-        repository.getEmail(_email)
-    }
-
     fun setUser(name: String, email: String, uid: String) {
         if (_name.value != name || _email.value != email || _uid.value != uid) {
             _name.value = name
@@ -41,9 +36,11 @@ class UserViewModel : ViewModel() {
         db.getReference("Users").child(uid).addListenerForSingleValueEvent(object:
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                _name.value = snapshot.child("Name").value.toString()
-                _email.value = snapshot.child("Email").value.toString()
+                _name.value = snapshot.child("name").value.toString()
+                _email.value = snapshot.child("email").value.toString()
                 _uid.value = uid
+                repository.getName(uid, _name)
+                repository.getEmail(uid, _email)
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -3,6 +3,7 @@ package com.example.forestlearning
 
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -22,6 +23,10 @@ class StudytimeAdapter()
     @RequiresApi(Build.VERSION_CODES.O)
     private val repo = Repo()
 
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var runnable: Runnable
+    private var isRunning = false
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
             FragmentSubjecttimerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,12 +38,42 @@ class StudytimeAdapter()
         val data = getItem(position)
         holder.bind(data)
         holder.binding.playButton.setOnClickListener {
+            // 시간 측정 로직 작성
+            if (position != -1) {
+                if(!isRunning) {
+                    startTimer(position, data)
+                    isRunning = true
+                }else {
+                    stopTimer(position, data)
+                    isRunning = false
+                }
+            }
+        }
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun startTimer(position: Int, subject: Subjects) {
+        runnable = Runnable {
+            subject.time.sec++
+            if (subject.time.sec == 60) {
+                subject.time.sec = 0
+                subject.time.minute++
+            }
+            if (subject.time.minute == 60) {
+                subject.time.minute = 0
+                subject.time.hour++
+            }
+            viewModel.updateTime(position, subject.time)
+            viewModel.update_todaytreefruit(position, subject.time.hour)
+            handler.postDelayed(runnable, 1000)
         }
-        if (position != -1) {
-            viewModel.updateTime(position, data.time)
-        }
-        viewModel.update_todaytreefruit(position, data.time.hour)
+        handler.postDelayed(runnable, 1000)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun stopTimer(position: Int, subject: Subjects) {
+        handler.removeCallbacks(runnable)
+        viewModel.updateTime(position, subject.time)
     }
 
     class Holder(val binding: FragmentSubjecttimerBinding) : RecyclerView.ViewHolder(binding.root) {

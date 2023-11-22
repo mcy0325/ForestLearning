@@ -9,7 +9,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.FirebaseFirestore
 
 class FruitshowAdapter : RecyclerView.Adapter<FruitshowAdapter.Holder>() {
     //리사이클러뷰로 출력할 데이터 받는 곳
@@ -18,18 +17,30 @@ class FruitshowAdapter : RecyclerView.Adapter<FruitshowAdapter.Holder>() {
     // Realtime Database에서 데이터를 불러오기 위해 선언
     val db : DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
-    //목록 띄우기
+    val originalData = mutableListOf<FruitShowData>()
+
     init {
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                fruitData.clear()
-                for(snapshot in dataSnapshot.children) {
-                    val item = snapshot.getValue(FruitShowData::class.java)
-                    if (item != null) {
-                        fruitData.add(item)
+                originalData.clear()
+                for(userSnapshot in dataSnapshot.children) {
+                    val userName = userSnapshot.child("name").getValue(String::class.java) ?: ""
+                    var totalFruits = 0
+
+                    val dayFruitSnapshot = userSnapshot.child("Dayfruit")
+                    for(dateSnapshot in dayFruitSnapshot.children) {
+                        for(fruitSnapshot in dateSnapshot.children) {
+                            val fruitNum = fruitSnapshot.getValue(Int::class.java) ?: 0
+                            totalFruits += fruitNum
+                        }
                     }
+
+                    val item = FruitShowData(userName, totalFruits)
+                    originalData.add(item)
                 }
-                fruitData.sortByDescending { it.fruitnum }
+                originalData.sortByDescending { it.fruitnum }
+                fruitData.clear()
+                fruitData.addAll(originalData)
                 notifyDataSetChanged()
             }
 
@@ -39,9 +50,14 @@ class FruitshowAdapter : RecyclerView.Adapter<FruitshowAdapter.Holder>() {
         })
     }
 
-    //검색 기능 구현 함수
-    fun search(searchName : String) {
-
+    fun search(searchName: String) {
+        fruitData.clear()
+        for (item in originalData) {
+            if (item.nickname?.contains(searchName) == true) {
+                fruitData.add(item)
+            }
+        }
+        notifyDataSetChanged()
     }
 
     class Holder(val binding: FruitshowListBinding) : RecyclerView.ViewHolder(binding.root) {

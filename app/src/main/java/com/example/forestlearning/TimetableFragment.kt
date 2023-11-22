@@ -9,8 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.forestlearning.databinding.FragmentTimetableBinding
 import com.example.forestlearning.viewmodel.TimeTableViewModel
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 
 class TimetableFragment : Fragment() {
 

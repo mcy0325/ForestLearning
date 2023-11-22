@@ -30,6 +30,7 @@ class FruitshowFragment : Fragment() {
         binding?.searchBtn?.setOnClickListener {
             if (binding?.searchBtn?.text?.isEmpty() == false) {
                 //FruitshowAdapter 내에 있는 search 함수 불러서 검색 기능 활성화
+                (binding?.fruitShowRecycler?.adapter as FruitshowAdapter).search(binding?.searchName?.text.toString())
             }
         }
     }

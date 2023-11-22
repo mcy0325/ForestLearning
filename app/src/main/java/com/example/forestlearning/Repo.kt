@@ -29,7 +29,6 @@ class Repo {
 
     val todaydate: LocalDate = LocalDate.now()
 
-
     fun updatefruitToFirebase(updatefruit: MutableMap<String, Int>){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid

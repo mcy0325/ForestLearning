@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import com.example.forestlearning.databinding.FragmentTreeBinding
 
 class TreeFragment : Fragment() {
-    private lateinit var binding: FragmentTreeBinding
-    private var viewModel: StudyTimeViewModel2 = StudyTimeViewModel2()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

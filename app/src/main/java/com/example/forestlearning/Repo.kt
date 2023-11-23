@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 class Repo {
@@ -38,13 +39,19 @@ class Repo {
                 .child("Dayfruit").child(todaydate.toString()).setValue(updatefruit)
         }
     }
-    fun getdayfruitFromFirebase(fruitMap: MutableLiveData<MutableMap<Int, Int>>){
+    fun setDate(newDate: LocalDate) : String{
+        val newDatestring = newDate.toString()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val date = LocalDate.parse(newDatestring, formatter)
+        return date.toString()
+    }
+    fun gettreefruitFromFirebase(fruitMap: MutableLiveData<MutableMap<Int, Int>>, date: LocalDate){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
 
         uid?.let { userUid ->
             databaseReference.child("Users").child(userUid)
-                .child("Dayfruit").child(todaydate.toString())
+                .child("Dayfruit").child(setDate(date))
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val dayfruitMap = mutableMapOf<Int, Int>()
@@ -100,7 +107,37 @@ class Repo {
                 })
                 }
         }
+    fun gettotaltime(date: LocalDate, time: MutableLiveData<Time>){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
 
+        uid?.let { userUid ->
+            databaseReference.child("Users").child(userUid)
+                .child("Totaltime").child(setDate(date))
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val totaltime = snapshot.getValue(Time::class.java)
+                        totaltime?.let {
+                            time.postValue(it)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // Failed to read value
+                    }
+                })
+        }
+    }
+
+    fun updatetotaltime(time: Time){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        uid?.let { userUid ->
+            databaseReference.child("Users").child(userUid)
+                .child("Totaltime").child(setDate(todaydate)).setValue(time)
+        }
+    }
 
 
 }

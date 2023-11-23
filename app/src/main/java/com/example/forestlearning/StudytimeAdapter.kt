@@ -64,6 +64,7 @@ class StudytimeAdapter()
                 subject.time.hour++
             }
             viewModel.updateTime(position, subject.time)
+            viewModel.updatetotaltime()
             viewModel.update_todaytreefruit(position, subject.time.hour)
             handler.postDelayed(runnable, 1000)
         }
@@ -74,6 +75,7 @@ class StudytimeAdapter()
     private fun stopTimer(position: Int, subject: Subjects) {
         handler.removeCallbacks(runnable)
         viewModel.updateTime(position, subject.time)
+        viewModel.updatetotaltime()
     }
 
     class Holder(val binding: FragmentSubjecttimerBinding) : RecyclerView.ViewHolder(binding.root) {

@@ -53,10 +53,18 @@ class Study_timeFragment : Fragment() {
             adapter.submitList(newList)
         })
 
+        viewModel.todaytotaltime.observe(viewLifecycleOwner, Observer{
+            binding.totalTime.text = formatTime(it)
+        })
+
         binding?.addButton?.setOnClickListener{
             findNavController().navigate(R.id.action_study_timeFragment_to_subject_adderFragment)
         }
     }
 
 
+}
+
+private fun formatTime(time: Time): String {
+    return String.format("%02d:%02d:%02d", time.hour, time.minute, time.sec)
 }

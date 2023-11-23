@@ -107,7 +107,7 @@ class Repo {
                 })
                 }
         }
-    fun gettotaltime(date: LocalDate): Time{
+    fun gettotaltime(date: LocalDate, time: MutableLiveData<Time>){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
 
@@ -118,7 +118,7 @@ class Repo {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val totaltime = snapshot.getValue(Time::class.java)
                         totaltime?.let {
-                            return it
+                            time.postValue(it)
                         }
                     }
 
@@ -127,7 +127,16 @@ class Repo {
                     }
                 })
         }
-        return Time(0,0,0)
+    }
+
+    fun updatetotaltime(time: Time){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        uid?.let { userUid ->
+            databaseReference.child("Users").child(userUid)
+                .child("Totaltime").child(setDate(todaydate)).setValue(time)
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.forestlearning
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.navGraphViewModels
 import com.example.forestlearning.databinding.FragmentTodaytreeBinding
 import java.lang.IllegalArgumentException
 import java.time.LocalDate
@@ -57,7 +59,8 @@ class TodaytreeFragment : Fragment() {
         val treefruitMap = viewModel.treefruit.value ?: mutableMapOf()
 
         val treeBitmap = BitmapFactory.decodeResource(resources, R.drawable.tree)
-        val canvas = Canvas(treeBitmap)
+        val mutableBitmap = treeBitmap.copy(Bitmap.Config.ARGB_8888, true)
+        val canvas = Canvas(mutableBitmap)
 
         treefruitMap.forEach { (fruitNum, fruitcount) ->
             val fruitBitmap = when (fruitNum) {
@@ -73,15 +76,18 @@ class TodaytreeFragment : Fragment() {
 
                 canvas.drawBitmap(fruitBitmap, x, y, null)
             }
+
         }
 
-        val totaltime = repo.gettotaltime(viewModel.date)
-        val hour = totaltime.hour
-        val minute = totaltime.minute
-        val sec = totaltime.sec
-        binding.totalTime.text = getString(R.string.time_format, hour, minute, sec)
+        val totaltime = viewModel.totaltime.value!!
+        binding.treeContainer.background = BitmapDrawable(resources, mutableBitmap)
+        binding.totalTime.text = formatTime(totaltime)
         }
+
+    private fun formatTime(time: Time): String {
+        return String.format("%02d:%02d:%02d", time.hour, time.minute, time.sec)
     }
+
 
 
 companion object {

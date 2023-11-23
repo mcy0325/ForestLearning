@@ -16,8 +16,8 @@ class StudyTimeViewModel2 : ViewModel() {
     private val repo = Repo()
 
 
-    private val _totaltime = MutableLiveData(Time(0, 0, 0))
-    val totaltime: LiveData<Time> get() = _totaltime
+    private val _totaltime = MutableLiveData<Time>()
+    val totaltime: MutableLiveData<Time> get() = _totaltime
 
     val subjectsLiveList: LiveData<MutableList<Subjects>> get() = _subjectsLiveList
     private val _subjectsLiveList = MutableLiveData<MutableList<Subjects>>()
@@ -28,19 +28,29 @@ class StudyTimeViewModel2 : ViewModel() {
     val subjectsList: MutableList<Subjects> get() = _subjectsList
     private val _subjectsList = mutableListOf<Subjects>()
 
+    val todaydate: LocalDate = LocalDate.now()
+    val todaytotaltime: MutableLiveData<Time> get() = _todaytotaltime
+    private val _todaytotaltime = MutableLiveData<Time>()
     val treefruit: LiveData<MutableMap<Int, Int>> get() = _treefruit
     private val _treefruit = MutableLiveData<MutableMap<Int, Int>>()
     init {
         _date.value = LocalDate.now()
         repo.getSubjectsFromFirebase(_subjectsLiveList)
         repo.gettreefruitFromFirebase(_treefruit, date.value!!)
+        repo.gettotaltime(_date.value!!, _todaytotaltime)
     }
 
     fun incrementDate(){
         _date.value = _date.value?.plusDays(1)
+        gettotaltime(_date.value!!)
     }
     fun decrementDate(){
         _date.value = _date.value?.minusDays(1)
+        gettotaltime(_date.value!!)
+    }
+
+    fun gettotaltime(date: LocalDate){
+        repo.gettotaltime(date, _totaltime)
     }
 
     fun update_todaytreefruit(position: Int, fruit: Int) {
@@ -57,10 +67,6 @@ class StudyTimeViewModel2 : ViewModel() {
         repo.updateSubjectsToFirebase(updateList)
     }
 
-    fun updateSubjects(newList: MutableList<Subjects>) {
-        _subjectsLiveList.value = newList
-    }
-
     fun updatetotaltime() {
         _subjectsLiveList.value?.let { subjectsList ->
             var hour = 0
@@ -75,8 +81,9 @@ class StudyTimeViewModel2 : ViewModel() {
             sec %= 60
             hour += minute / 60
             minute %= 60
-            _totaltime.value = Time(hour, minute, sec)
+            _todaytotaltime.value = Time(hour, minute, sec)
         }
+        repo.updatetotaltime(todaytotaltime.value!!)
     }
 
     fun updateTime(position: Int, time: Time) {

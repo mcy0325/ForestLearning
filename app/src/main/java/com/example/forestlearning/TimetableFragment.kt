@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.forestlearning.Authentication.Companion.auth
 import com.example.forestlearning.databinding.FragmentTimetableBinding
 import com.example.forestlearning.viewmodel.TimeTableViewModel
 
@@ -22,6 +23,19 @@ class TimetableFragment : Fragment() {
     ): View? {
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
         return binding?.root
+    }
+
+    private fun convertTimeToMinute(time: String): Int {
+        val split = time.split(":")
+        val hours = split[0].toInt()
+        val minutes = split[1].toInt()
+        return hours * 60 + minutes
+    }
+
+    private fun convertMinuteToTime(minute: Int): String {
+        val hours = minute / 60
+        val minutes = minute % 60
+        return String.format("%02d:%02d", hours, minutes)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,16 +91,29 @@ class TimetableFragment : Fragment() {
 
         viewModel.courses.observe(viewLifecycleOwner) { courses ->
             courses.forEach { course ->
-                // 첫 번째 시간대의 TextView 업데이트
-                val key1 = "${course.day1}${course.time1}-${course.time2}"
-                val textView1 = dayTimeMap[key1]
-                textView1?.text = "${course.courseName}\n${course.teacherName}\n${course.coursePlace1}"
-
-                // 두 번째 시간대의 TextView 업데이트
-                val key2 = "${course.day2}${course.time3}-${course.time4}"
-                val textView2 = dayTimeMap[key2]
-                textView2?.text = "${course.courseName}\n${course.teacherName}\n${course.coursePlace2}"
+                val startTime = course.time1?.let { convertTimeToMinute(it) }
+                val endTime = course.time2?.let { convertTimeToMinute(it) }
+                val startTime2 = course.time3?.let { convertTimeToMinute(it) }
+                val endTime2 = course.time4?.let { convertTimeToMinute(it) }
+                if (startTime != null) {
+                    for (time in startTime until endTime!! step 60) {
+                        val key = "${course.day1}${convertMinuteToTime(time)}-${convertMinuteToTime(time + 60)}"
+                        val textView = dayTimeMap[key]
+                        textView?.text = "${course.courseName}\n${course.teacherName}\n${course.coursePlace1}"
+                    }
+                }
+                if (startTime2 != null) {
+                    for (time in startTime2 until endTime2!! step 60) {
+                        val key = "${course.day2}${convertMinuteToTime(time)}-${convertMinuteToTime(time + 60)}"
+                        val textView = dayTimeMap[key]
+                        textView?.text = "${course.courseName}\n${course.teacherName}\n${course.coursePlace2}"
+                    }
+                }
             }
+        }
+
+        binding?.courseDeleteButton?.setOnClickListener {
+            auth.uid?.let { it1 -> viewModel.deleteAllCourses(it1) } // 사용자의 UID 전달
         }
 
         //courseAddButton 클릭 시 courseAddFragment로 이동

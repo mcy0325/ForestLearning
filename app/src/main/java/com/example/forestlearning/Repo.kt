@@ -63,6 +63,7 @@ class Repo {
                                 }
                             }
                         }
+                        println(dayfruitMap)
                         fruitMap.postValue(dayfruitMap)
                     }
 

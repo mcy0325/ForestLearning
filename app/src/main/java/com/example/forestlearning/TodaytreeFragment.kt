@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import com.example.forestlearning.databinding.FragmentTodaytreeBinding
 import java.lang.IllegalArgumentException
@@ -42,20 +43,27 @@ class TodaytreeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.totaltime.observe(viewLifecycleOwner, Observer{
+            binding.totalTime.text = formatTime(it)
+        })
+        viewModel.date.observe(viewLifecycleOwner, Observer {
+            binding.todayDate.text = repo.setDate(it)
+        })
+        viewModel.treefruit.observe(viewLifecycleOwner, Observer {
+            updateTree()
+        })
+
+
         binding.leftArrow.setOnClickListener {
             viewModel.decrementDate()
-            updateTreeAndTime()
         }
         binding.rightArrow.setOnClickListener {
             viewModel.incrementDate()
-            updateTreeAndTime()
         }
-        updateTreeAndTime()
+
     }
 
-    private fun updateTreeAndTime() {
-        binding.todayDate.text = repo.setDate(viewModel.date.value!!)
-
+    private fun updateTree() {
         val treefruitMap = viewModel.treefruit.value ?: mutableMapOf()
 
         val treeBitmap = BitmapFactory.decodeResource(resources, R.drawable.tree)
@@ -63,25 +71,26 @@ class TodaytreeFragment : Fragment() {
         val canvas = Canvas(mutableBitmap)
 
         treefruitMap.forEach { (fruitNum, fruitcount) ->
+            var limitfruitcount = 0
+            if (fruitcount > 5) {
+                limitfruitcount = 5
+            } else {
+                limitfruitcount = fruitcount
+            }
             val fruitBitmap = when (fruitNum) {
                 0 -> BitmapFactory.decodeResource(resources, R.drawable.apple)
                 1 -> BitmapFactory.decodeResource(resources, R.drawable.banana)
                 2 -> BitmapFactory.decodeResource(resources, R.drawable.grape)
                 else -> throw IllegalArgumentException("Unknown fruit index: $fruitNum")
             }
-
-            repeat(fruitcount) {
+            repeat(limitfruitcount) {
                 val x = (0 until canvas.width).random().toFloat()
                 val y = (0 until canvas.height).random().toFloat()
 
                 canvas.drawBitmap(fruitBitmap, x, y, null)
             }
-
         }
-
-        val totaltime = viewModel.totaltime.value!!
         binding.treeContainer.background = BitmapDrawable(resources, mutableBitmap)
-        binding.totalTime.text = formatTime(totaltime)
         }
 
     private fun formatTime(time: Time): String {

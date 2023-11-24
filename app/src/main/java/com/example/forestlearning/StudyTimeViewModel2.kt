@@ -28,7 +28,6 @@ class StudyTimeViewModel2 : ViewModel() {
     val subjectsList: MutableList<Subjects> get() = _subjectsList
     private val _subjectsList = mutableListOf<Subjects>()
 
-    val todaydate: LocalDate = LocalDate.now()
     val todaytotaltime: MutableLiveData<Time> get() = _todaytotaltime
     private val _todaytotaltime = MutableLiveData<Time>()
     val treefruit: LiveData<MutableMap<Int, Int>> get() = _treefruit
@@ -38,19 +37,22 @@ class StudyTimeViewModel2 : ViewModel() {
         repo.getSubjectsFromFirebase(_subjectsLiveList)
         repo.gettreefruitFromFirebase(_treefruit, date.value!!)
         repo.gettotaltime(_date.value!!, _todaytotaltime)
+        repo.gettotaltime(_date.value!!, _totaltime)
     }
 
     fun incrementDate(){
         _date.value = _date.value?.plusDays(1)
-        gettotaltime(_date.value!!)
+        _totaltime.value = Time(0,0,0)
+        repo.gettotaltime(_date.value!!, _totaltime)
+
+        repo.gettreefruitFromFirebase(_treefruit,_date.value!!)
     }
     fun decrementDate(){
         _date.value = _date.value?.minusDays(1)
-        gettotaltime(_date.value!!)
-    }
+        _totaltime.value = Time(0,0,0)
+        repo.gettotaltime(_date.value!!, _totaltime)
 
-    fun gettotaltime(date: LocalDate){
-        repo.gettotaltime(date, _totaltime)
+        repo.gettreefruitFromFirebase(_treefruit,_date.value!!)
     }
 
     fun update_todaytreefruit(position: Int, fruit: Int) {

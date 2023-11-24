@@ -38,19 +38,18 @@ class StudyTimeViewModel2 : ViewModel() {
         repo.getSubjectsFromFirebase(_subjectsLiveList)
         repo.gettreefruitFromFirebase(_treefruit, date.value!!)
         repo.gettotaltime(_date.value!!, _todaytotaltime)
+        repo.gettotaltime(_date.value!!, _totaltime)
     }
 
     fun incrementDate(){
         _date.value = _date.value?.plusDays(1)
-        gettotaltime(_date.value!!)
+        _totaltime.value = Time(0,0,0)
+        repo.gettotaltime(_date.value!!, _totaltime)
     }
     fun decrementDate(){
         _date.value = _date.value?.minusDays(1)
-        gettotaltime(_date.value!!)
-    }
-
-    fun gettotaltime(date: LocalDate){
-        repo.gettotaltime(date, _totaltime)
+        _totaltime.value = Time(0,0,0)
+        repo.gettotaltime(_date.value!!, _totaltime)
     }
 
     fun update_todaytreefruit(position: Int, fruit: Int) {

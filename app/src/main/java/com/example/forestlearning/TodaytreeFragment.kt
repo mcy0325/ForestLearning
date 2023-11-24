@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import com.example.forestlearning.databinding.FragmentTodaytreeBinding
 import java.lang.IllegalArgumentException
@@ -42,18 +43,22 @@ class TodaytreeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.totaltime.observe(viewLifecycleOwner, Observer{
+            binding.totalTime.text = formatTime(it)
+
+        })
         binding.leftArrow.setOnClickListener {
             viewModel.decrementDate()
-            updateTreeAndTime()
+            updateTree()
         }
         binding.rightArrow.setOnClickListener {
             viewModel.incrementDate()
-            updateTreeAndTime()
+            updateTree()
         }
-        updateTreeAndTime()
+        updateTree()
     }
 
-    private fun updateTreeAndTime() {
+    private fun updateTree() {
         binding.todayDate.text = repo.setDate(viewModel.date.value!!)
 
         val treefruitMap = viewModel.treefruit.value ?: mutableMapOf()
@@ -78,10 +83,7 @@ class TodaytreeFragment : Fragment() {
             }
 
         }
-
-        val totaltime = viewModel.totaltime.value!!
         binding.treeContainer.background = BitmapDrawable(resources, mutableBitmap)
-        binding.totalTime.text = formatTime(totaltime)
         }
 
     private fun formatTime(time: Time): String {

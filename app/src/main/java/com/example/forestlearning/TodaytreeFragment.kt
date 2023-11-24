@@ -45,22 +45,25 @@ class TodaytreeFragment : Fragment() {
 
         viewModel.totaltime.observe(viewLifecycleOwner, Observer{
             binding.totalTime.text = formatTime(it)
-
         })
+        viewModel.date.observe(viewLifecycleOwner, Observer {
+            binding.todayDate.text = repo.setDate(it)
+        })
+        viewModel.treefruit.observe(viewLifecycleOwner, Observer {
+            updateTree()
+        })
+
+
         binding.leftArrow.setOnClickListener {
             viewModel.decrementDate()
-            updateTree()
         }
         binding.rightArrow.setOnClickListener {
             viewModel.incrementDate()
-            updateTree()
         }
-        updateTree()
+
     }
 
     private fun updateTree() {
-        binding.todayDate.text = repo.setDate(viewModel.date.value!!)
-
         val treefruitMap = viewModel.treefruit.value ?: mutableMapOf()
 
         val treeBitmap = BitmapFactory.decodeResource(resources, R.drawable.tree)
@@ -68,20 +71,24 @@ class TodaytreeFragment : Fragment() {
         val canvas = Canvas(mutableBitmap)
 
         treefruitMap.forEach { (fruitNum, fruitcount) ->
+            var limitfruitcount = 0
+            if (fruitcount > 5) {
+                limitfruitcount = 5
+            } else {
+                limitfruitcount = fruitcount
+            }
             val fruitBitmap = when (fruitNum) {
                 0 -> BitmapFactory.decodeResource(resources, R.drawable.apple)
                 1 -> BitmapFactory.decodeResource(resources, R.drawable.banana)
                 2 -> BitmapFactory.decodeResource(resources, R.drawable.grape)
                 else -> throw IllegalArgumentException("Unknown fruit index: $fruitNum")
             }
-
-            repeat(fruitcount) {
+            repeat(limitfruitcount) {
                 val x = (0 until canvas.width).random().toFloat()
                 val y = (0 until canvas.height).random().toFloat()
 
                 canvas.drawBitmap(fruitBitmap, x, y, null)
             }
-
         }
         binding.treeContainer.background = BitmapDrawable(resources, mutableBitmap)
         }

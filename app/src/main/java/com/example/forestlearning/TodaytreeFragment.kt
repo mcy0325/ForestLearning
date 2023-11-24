@@ -35,15 +35,16 @@ class TodaytreeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentTodaytreeBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
+        binding = FragmentTodaytreeBinding.inflate(inflater, container, false)
+
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.totaltime.observe(viewLifecycleOwner, Observer{
+        // observe로 날짜가 바뀔때마다 업데이트
+        viewModel.totaltime.observe(viewLifecycleOwner, Observer {
             binding.totalTime.text = formatTime(it)
         })
         viewModel.date.observe(viewLifecycleOwner, Observer {
@@ -53,7 +54,7 @@ class TodaytreeFragment : Fragment() {
             updateTree()
         })
 
-
+        // 방향 버튼을 누르면 날짜 변경
         binding.leftArrow.setOnClickListener {
             viewModel.decrementDate()
         }
@@ -63,6 +64,7 @@ class TodaytreeFragment : Fragment() {
 
     }
 
+    // tree에 fruit drawable을 업로드하기 위한 함수
     private fun updateTree() {
         val treefruitMap = viewModel.treefruit.value ?: mutableMapOf()
 
@@ -88,18 +90,11 @@ class TodaytreeFragment : Fragment() {
                 val y = (0 until canvas.height).random().toFloat()
 
                 canvas.drawBitmap(fruitBitmap, x, y, null)
-            }
-        }
+            } }
         binding.treeContainer.background = BitmapDrawable(resources, mutableBitmap)
-        }
+    }
 
     private fun formatTime(time: Time): String {
         return String.format("%02d:%02d:%02d", time.hour, time.minute, time.sec)
-    }
-
-
-
-companion object {
-
     }
 }

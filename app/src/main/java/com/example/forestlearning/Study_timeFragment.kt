@@ -43,16 +43,18 @@ class Study_timeFragment : Fragment() {
         databaseReference = FirebaseDatabase.getInstance().getReference("subjects")
 
         viewModel = ViewModelProvider(requireActivity())[StudyTimeViewModel2::class.java]
-
+        // Adapter, recyclerview 연결
         recyclerView = binding.studyTimeRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = StudytimeAdapter()
         recyclerView.adapter = adapter
 
+        // observe로 subjectList를 전달
         viewModel.subjectsLiveList.observe(viewLifecycleOwner, Observer { newList ->
             adapter.submitList(newList)
         })
 
+        // observe로 todaytotaltime 업데이트
         viewModel.todaytotaltime.observe(viewLifecycleOwner, Observer{
             binding.totalTime.text = formatTime(it)
         })
@@ -61,10 +63,7 @@ class Study_timeFragment : Fragment() {
             findNavController().navigate(R.id.action_study_timeFragment_to_subject_adderFragment)
         }
     }
-
-
 }
-
 private fun formatTime(time: Time): String {
     return String.format("%02d:%02d:%02d", time.hour, time.minute, time.sec)
 }

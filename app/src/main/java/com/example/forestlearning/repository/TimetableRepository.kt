@@ -1,6 +1,5 @@
 package com.example.forestlearning.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.forestlearning.CourseData
@@ -11,47 +10,56 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class TimetableRepository {
-    private val db = FirebaseDatabase.getInstance()
+    // Firebase 인스턴스 초기화
+    private val db = FirebaseDatabase.getInstance().reference
     private val auth = FirebaseAuth.getInstance()
 
+    //사용자의 강의 데이터를 가져오는 함수
     fun getCourses(): LiveData<List<CourseData>> {
+        //사용자의 UID를 가져옴
         val userId = auth.currentUser?.uid ?: return MutableLiveData(emptyList())
         val liveData = MutableLiveData<List<CourseData>>()
 
-        db.reference.child("Courses").child(userId).addValueEventListener(object : ValueEventListener {
+        //Firebase에서 강의 데이터 가져오기
+        getCoursesReference(userId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val courses = snapshot.children.mapNotNull { CourseData(it.value as HashMap<String, String>) }
+                // snapshot에서 강의 데이터를 가져와서 LiveData의 value로 설정
+                val courses = snapshot.children.mapNotNull {
+                    it.getValue(CourseData::class.java)
+                }
                 liveData.value = courses
             }
 
             override fun onCancelled(error: DatabaseError) {
+                // 데이터를 가져오는 것이 취소되었을 때의 처리
             }
         })
-
+        
         return liveData
     }
 
+    // 강의를 추가하는 함수
     fun addCourse(courseData: CourseData){
+        // 현재 사용자의 UID를 가져오기
         val userId = auth.currentUser?.uid ?: return
-        val courseId = db.reference.child("Courses").child(userId).push().key ?: return
-
-        if (courseId != null) {
-            db.reference.child("Courses").child(userId).child(courseId).setValue(courseData)
-                .addOnSuccessListener {
-                    Log.d("TimetableRepository", "addCourse: success")
-                }
-                .addOnFailureListener {
-                    Log.d("TimetableRepository", "addCourse: failure")
-                }
-        }
+        // 새로운 강의 ID를 생성
+        val courseId = getCoursesReference(userId).push().key ?: return
+        // Firebase에 새로운 강의 데이터를 추가
+        getCoursesReference(userId).child(courseId).setValue(courseData)
+            .addOnSuccessListener {
+                // 데이터 추가에 성공
+            }
+            .addOnFailureListener {
+                // 데이터 추가에 실패
+            }
     }
 
+    // 사용자의 모든 강의를 제거하는 함수
     fun removeAllCourses(userId: String) {
-        val ref = FirebaseDatabase.getInstance().getReference("Courses").child(userId)
-        ref.removeValue()
+        getCoursesReference(userId).removeValue()
     }
 
-
-
+    // 강의 데이터를 저장하고 있는 Firebase의 경로를 가져오는 함수
+    private fun getCoursesReference(userId: String) = db.child("Courses").child(userId)
 
 }

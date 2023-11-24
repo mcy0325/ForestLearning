@@ -36,6 +36,7 @@ class SignInFragment : Fragment() {
         return binding?.root
     }
 
+    //회원 가입 함수
     private fun signIn(name: String, email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {

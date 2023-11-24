@@ -22,16 +22,27 @@ class FruitshowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     
-        //데이터 불러오기
-        binding?.fruitShowRecycler?.layoutManager = LinearLayoutManager(context)
-        binding?.fruitShowRecycler?.adapter = FruitshowAdapter()
+        //RecyclerView 설정
+        binding?.fruitShowRecycler?.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = FruitshowAdapter()
+        }
         
         //검색 기능 사용 (사용자 이름 검색)
         binding?.searchBtn?.setOnClickListener {
-            if (binding?.searchBtn?.text?.isEmpty() == false) {
-                //FruitshowAdapter 내에 있는 search 함수 불러서 검색 기능 활성화
-                (binding?.fruitShowRecycler?.adapter as FruitshowAdapter).search(binding?.searchName?.text.toString())
+            val searchName = binding?.searchName?.text.toString()
+            if (searchName.isNotEmpty()) {
+                // 검색어가 비어있지 않을 경우 검색 수행
+                (binding?.fruitShowRecycler?.adapter as FruitshowAdapter).search(searchName)
+            } else {
+                // 검색어가 비어있을 경우 전체 목록 출력
+                (binding?.fruitShowRecycler?.adapter as FruitshowAdapter).search("")
             }
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 뷰가 파괴될 때 바인딩 객체를 null로 설정
+        binding = null
     }
 }

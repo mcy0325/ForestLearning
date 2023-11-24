@@ -36,12 +36,9 @@ class LoginFragment : Fragment() {
 
             if (binding?.inputEmail?.text?.isEmpty() == false && binding?.inputPassword?.text?.isEmpty() == false) {
                 login(email, password)
-            }
-
-            else {
+            } else {
                 Toast.makeText(requireContext(), "이메일과 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
-
         }
 
         return binding?.root
@@ -62,9 +59,10 @@ class LoginFragment : Fragment() {
 
                     Toast.makeText(requireContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_loginFragment2_to_mainActivity)
+                } else{
+                    // 이메일 인증이 안 된 경우
+                    Toast.makeText(requireContext(), "이메일 인증에 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
-                // 이메일 인증이 안 된 경우
-                else Toast.makeText(requireContext(), "이메일 인증에 실패했습니다.", Toast.LENGTH_SHORT).show()
             } else {
                 // 로그인 실패시 실행
                 Toast.makeText(requireContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()

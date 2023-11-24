@@ -13,22 +13,20 @@ import com.example.forestlearning.databinding.FragmentCourseAddBinding
 import com.example.forestlearning.viewmodel.TimeTableViewModel
 
 class CourseAddFragment : Fragment() {
-
+    //뷰 바인딩 초기화
     private var _binding: FragmentCourseAddBinding? = null
     private val binding get() = _binding
     val viewModel : TimeTableViewModel by activityViewModels()
 
-    private lateinit var daySpinner1: Spinner
-    private lateinit var daySpinner2: Spinner
-    private lateinit var timeSpinner1: Spinner
-    private lateinit var timeSpinner2: Spinner
-    private lateinit var timeSpinner3: Spinner
-    private lateinit var timeSpinner4: Spinner
+    //스피너 변수 선언
+    private var daySpinners: List<Spinner>? = null
+    private var timeSpinners: List<Spinner>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //뷰 바인딩 설정
         _binding = FragmentCourseAddBinding.inflate(inflater, container, false)
 
         return binding?.root
@@ -37,46 +35,40 @@ class CourseAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        daySpinner1 = binding?.daySpinner1 ?: return
-        daySpinner2 = binding?.daySpinner2 ?: return
-        timeSpinner1 = binding?.timeSpinner1 ?: return
-        timeSpinner2 = binding?.timeSpinner2 ?: return
-        timeSpinner3 = binding?.timeSpinner3 ?: return
-        timeSpinner4 = binding?.timeSpinner4 ?: return
+        //스피너 바인딩
+        daySpinners = listOfNotNull(binding?.daySpinner1, binding?.daySpinner2)
+        timeSpinners = listOfNotNull(binding?.timeSpinner1, binding?.timeSpinner2, binding?.timeSpinner3, binding?.timeSpinner4)
 
-        //courseEndButton 클릭 시 timetableFragment로 이동
+        //courseEndButton 클릭 시 동작
         binding?.courseEndButton?.setOnClickListener {
+            // 강의 정보를 설정
             viewModel.setCourseData(
                 binding?.courseName?.text.toString(),
                 binding?.teacherName?.text.toString(),
-                daySpinner1.selectedItem.toString(),
-                timeSpinner1.selectedItem.toString(),
-                timeSpinner2.selectedItem.toString(),
+                daySpinners?.getOrNull(0)?.selectedItem.toString(),
+                timeSpinners?.getOrNull(0)?.selectedItem.toString(),
+                timeSpinners?.getOrNull(1)?.selectedItem.toString(),
                 binding?.coursePlace1?.text.toString(),
-                daySpinner2.selectedItem.toString(),
-                timeSpinner3.selectedItem.toString(),
-                timeSpinner4.selectedItem.toString(),
+                daySpinners?.getOrNull(1)?.selectedItem.toString(),
+                timeSpinners?.getOrNull(2)?.selectedItem.toString(),
+                timeSpinners?.getOrNull(3)?.selectedItem.toString(),
                 binding?.coursePlace2?.text.toString())
 
+            // timetableFragment로 이동
             findNavController().navigate(R.id.action_courseAddFragment_to_timetableFragment)
         }
 
-        val dayAdapter1 = ArrayAdapter.createFromResource(requireActivity(), R.array.days, android.R.layout.simple_spinner_dropdown_item)
-        val dayAdapter2 = ArrayAdapter.createFromResource(requireActivity(), R.array.days, android.R.layout.simple_spinner_dropdown_item)
-        val timeAdapter1 = ArrayAdapter.createFromResource(requireActivity(), R.array.time, android.R.layout.simple_spinner_dropdown_item)
-        val timeAdapter2 = ArrayAdapter.createFromResource(requireActivity(), R.array.time, android.R.layout.simple_spinner_dropdown_item)
-        val timeAdapter3 = ArrayAdapter.createFromResource(requireActivity(), R.array.time, android.R.layout.simple_spinner_dropdown_item)
-        val timeAdapter4 = ArrayAdapter.createFromResource(requireActivity(), R.array.time, android.R.layout.simple_spinner_dropdown_item)
+        //스피너에 어댑터 설정
+        val dayAdapter = ArrayAdapter.createFromResource(requireContext(), R.array.days, android.R.layout.simple_spinner_dropdown_item)
+        val timeAdapter = ArrayAdapter.createFromResource(requireContext(), R.array.time, android.R.layout.simple_spinner_dropdown_item)
 
-        daySpinner1.adapter = dayAdapter1
-        daySpinner2.adapter = dayAdapter2
-        timeSpinner1.adapter = timeAdapter1
-        timeSpinner2.adapter = timeAdapter2
-        timeSpinner3.adapter = timeAdapter3
-        timeSpinner4.adapter = timeAdapter4
+        // 각각의 스피너에 어댑터 연결
+        daySpinners?.forEach { it?.adapter = dayAdapter }
+        timeSpinners?.forEach { it?.adapter = timeAdapter }
 
     }
 
+    // 뷰가 파괴될 때 바인딩 해제
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

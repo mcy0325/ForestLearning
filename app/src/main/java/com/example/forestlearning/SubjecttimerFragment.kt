@@ -12,17 +12,15 @@ import kotlin.concurrent.timer
 
 class SubjecttimerFragment : Fragment(){
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val binding = FragmentSubjecttimerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -31,6 +29,4 @@ class SubjecttimerFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
     }
-
-
 }

@@ -19,17 +19,24 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 class Repo {
 
-    val database = Firebase.database
-    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
     val subjectsListRef = FirebaseDatabase.getInstance().getReference("SubjectsList")
-    val totaltimeRef = FirebaseDatabase.getInstance().getReference("Totaltime")
-    val dayfruitRef = FirebaseDatabase.getInstance().getReference("Dayfruit")
-
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     val todaydate: LocalDate = LocalDate.now()
 
+    // Local date를 가져왔을 때 save 혹은 upload를 위한 String 변환 함수
+    fun setDate(newDate: LocalDate) : String{
+        val newDatestring = newDate.toString()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val date = LocalDate.parse(newDatestring, formatter)
+        return date.toString()
+    }
+
+    // 오늘 획득한 fruit와 그 갯수를 저장하고 가져오는 함수
+    // updatefruitToFirebase : Users - userUid - Dayfruit - todaydate
+    // MutableMap<String, Int>를 인자로 받아 업데이트
+    // gettreefruitFromFirebase : Users - userUid - Dayfruit - todaydate
+    // MutableLiveData<Mutablemap<Int, Int>>와 date를 인자로 받아 해당 날짜의 fruit를 업데이트
     fun updatefruitToFirebase(updatefruit: MutableMap<String, Int>){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
@@ -38,12 +45,6 @@ class Repo {
             databaseReference.child("Users").child(userUid)
                 .child("Dayfruit").child(todaydate.toString()).setValue(updatefruit)
         }
-    }
-    fun setDate(newDate: LocalDate) : String{
-        val newDatestring = newDate.toString()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val date = LocalDate.parse(newDatestring, formatter)
-        return date.toString()
     }
     fun gettreefruitFromFirebase(fruitMap: MutableLiveData<MutableMap<Int, Int>>, date: LocalDate){
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -60,19 +61,19 @@ class Repo {
                             dayfruit?.let {
                                 data.key?.toIntOrNull()?.let { key ->
                                     dayfruitMap.put(key, it)
-                                }
-                            }
-                        }
+                                } } }
                         println(dayfruitMap)
                         fruitMap.postValue(dayfruitMap)
                     }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                    }
-                })
-        }
-    }
+                    override fun onCancelled(error: DatabaseError) {}
+                }) } }
+
+    // 새로운 subject를 upload하고 가져오는 함수
+    // updateSubjectToFirebase : SubjectList - UserUid - todaydate
+    // MutableList를 인자로 받아 바로 저장
+    // getSubjectFromFirebase : SubjectList - UserUid - todaydate
+    // MutableLiveData<MutableList<Subjects>>을 인자로 받아 바로 업데이트
     fun updateSubjectsToFirebase(subjectsList: MutableList<Subjects>){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
@@ -81,7 +82,6 @@ class Repo {
             subjectsListRef.child(userUid).child(todaydate.toString()).setValue(subjectsList)
         }
     }
-
     fun getSubjectsFromFirebase(
         subjectList: MutableLiveData<MutableList<Subjects>>){
 
@@ -97,18 +97,26 @@ class Repo {
                             val subjects = data.getValue(Subjects::class.java)
                             subjects?.let {
                                 subjectsList.add(it)
-                            }
-                        }
+                            } }
                         subjectList.postValue(subjectsList)
                     }
+                    override fun onCancelled(error: DatabaseError) {}
+                }) } }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                    }
-                })
-                }
-        }
-    fun gettotaltime(date: LocalDate, time: MutableLiveData<Time>){
+    // totaltime을 날짜별로 save하고 가져오는 함수
+    // updatetotaltimeToFirebase : Users - userUid - Totaltime - todaydate
+    // Time 객체를 입력받아 오늘 날짜에 저장
+    // gettotaltimeFromFirebase : Users - userUid - Totaltime - todaydate
+    // date와 MutableLiveData<Time>을 인자로 받아 해당 날짜의 totaltime을 받아와 업데이트
+    fun updatetotaltimeToFirebase(time: Time){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        uid?.let { userUid ->
+            databaseReference.child("Users").child(userUid)
+                .child("Totaltime").child(setDate(todaydate)).setValue(time)
+        } }
+    fun gettotaltimeFromFirebase(date: LocalDate, time: MutableLiveData<Time>){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
 
@@ -120,25 +128,12 @@ class Repo {
                         val totaltime = snapshot.getValue(Time::class.java)
                         totaltime?.let {
                             time.postValue(it)
-                        }
-                    }
+                        } }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                    }
-                })
-        }
-    }
+                    override fun onCancelled(error: DatabaseError) {}
+                }) } }
 
-    fun updatetotaltime(time: Time){
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val uid = currentUser?.uid
 
-        uid?.let { userUid ->
-            databaseReference.child("Users").child(userUid)
-                .child("Totaltime").child(setDate(todaydate)).setValue(time)
-        }
-    }
 
 
 }

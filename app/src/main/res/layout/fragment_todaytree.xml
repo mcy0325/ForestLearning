@@ -47,8 +47,7 @@
         <LinearLayout
             android:id="@+id/tree_container"
             android:layout_width="match_parent"
-            android:layout_height="490dp"
-
+            android:layout_height="485dp"
             android:orientation="vertical">
 
         </LinearLayout>
@@ -60,7 +59,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
 
 
                 <ImageButton

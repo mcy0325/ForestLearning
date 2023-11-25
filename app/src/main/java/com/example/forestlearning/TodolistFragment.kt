@@ -43,7 +43,7 @@ class TodolistFragment : Fragment() { //투두 리스트 프래그먼트
         // RecyclerView 설정
         recyclerView = binding.todoRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        toDoAdapter = TodoAdapter()
+        toDoAdapter = TodoAdapter(viewModel)
         recyclerView.adapter = toDoAdapter
 
         // ViewModel에서 LiveData를 관찰하여 데이터 변경을 감지하고 UI 갱신
@@ -60,25 +60,8 @@ class TodolistFragment : Fragment() { //투두 리스트 프래그먼트
         loadTodoItems()
 
         binding?.addButton?.setOnClickListener {
-            // TodoAddFragment로 이동
-            /*
-            val todoAddFragment = TodoAddFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.todolistFragment, todoAddFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-             */
             findNavController().navigate(R.id.action_todolistFragment_to_todoadderFragment)
         }
-
-        /*
-    fun onFabCliked() {
-        val todo = Todo(false, "개어려워")
-        todoViewModel.addTodo(todo)
-    }
-
- */
     }
 
     // TodoAddFragment에서 데이터를 받아와서 처리하는 메서드

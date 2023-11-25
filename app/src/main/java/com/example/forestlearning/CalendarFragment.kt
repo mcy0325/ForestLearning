@@ -68,6 +68,7 @@ class CalendarFragment : Fragment() {
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val selectedDate = "${year}년 ${month + 1}월 ${dayOfMonth}일"
             todoViewModel.setSelectedDate(selectedDate)
+            loadTodoItems()
         }
 
         //23.11.21 추가
@@ -80,7 +81,7 @@ class CalendarFragment : Fragment() {
         // RecyclerView 설정
         recyclerView = binding!!.CalendarRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        toDoAdapter = TodoAdapter()
+        toDoAdapter = TodoAdapter(todoViewModel)
         recyclerView.adapter = toDoAdapter
 
         // ViewModel에서 LiveData를 관찰하여 데이터 변경을 감지하고 UI 갱신
@@ -96,19 +97,6 @@ class CalendarFragment : Fragment() {
 
         // 데이터베이스에서 To-Do 아이템 불러오기
         loadTodoItems()
-
-
-        /*
-            //CalendarView 날짜 변환 이벤트
-            calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
-
-                //날짜 변수에 담기
-                var day: String = "${year}년 ${month+1}월 ${dayOfMonth}일" //+1추가
-
-                //변수 텍스트뷰에 담기
-                dayText?.text = day
-
-            }*/
     }
     //23.11.21 추가
     private fun loadTodoItems() {

@@ -3,6 +3,7 @@ package com.example.forestlearning
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
@@ -74,8 +75,8 @@ class TodaytreeFragment : Fragment() {
 
         treefruitMap.forEach { (fruitNum, fruitcount) ->
             val limitfruitcount: Int
-            if (fruitcount > 5) {
-                limitfruitcount = 5
+            if (fruitcount > 3) {
+                limitfruitcount = 3
             } else {
                 limitfruitcount = fruitcount
             }
@@ -86,10 +87,15 @@ class TodaytreeFragment : Fragment() {
                 else -> throw IllegalArgumentException("Unknown fruit index: $fruitNum")
             }
             repeat(limitfruitcount) {
-                val x = (0 until canvas.width).random().toFloat()
-                val y = (0 until canvas.height).random().toFloat()
+                var x: Int
+                var y: Int
+                do {
+                    x = (0 until canvas.width).random()
+                    y = (0 until canvas.height).random()
 
-                canvas.drawBitmap(fruitBitmap, x, y, null)
+                } while (treeBitmap.getPixel(x, y) == Color.TRANSPARENT)
+
+                canvas.drawBitmap(fruitBitmap, x.toFloat(), y.toFloat(), null)
             } }
         binding.treeContainer.background = BitmapDrawable(resources, mutableBitmap)
     }

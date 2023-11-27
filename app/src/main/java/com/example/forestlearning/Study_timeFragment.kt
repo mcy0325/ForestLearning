@@ -48,6 +48,7 @@ class Study_timeFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = StudytimeAdapter()
         recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(GridSpaceItemDecoration(1, 50))
 
         // observe로 subjectList를 전달
         viewModel.subjectsLiveList.observe(viewLifecycleOwner, Observer { newList ->

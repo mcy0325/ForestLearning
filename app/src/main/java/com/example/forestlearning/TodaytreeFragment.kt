@@ -73,7 +73,7 @@ class TodaytreeFragment : Fragment() {
         val canvas = Canvas(mutableBitmap)
 
         treefruitMap.forEach { (fruitNum, fruitcount) ->
-            var limitfruitcount = 0
+            val limitfruitcount: Int
             if (fruitcount > 5) {
                 limitfruitcount = 5
             } else {

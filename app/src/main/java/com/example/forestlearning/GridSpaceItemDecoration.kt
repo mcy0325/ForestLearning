@@ -16,10 +16,10 @@ class GridSpaceItemDecoration(private val spancount: Int, private val space: Int
         val column = position % spancount + 1
 
         if (position < spancount) {
-            outRect.top = space
+            outRect.top = 30
         }
 
         outRect.left = space
-        outRect.bottom = space
+        outRect.bottom = 30
     }
 }

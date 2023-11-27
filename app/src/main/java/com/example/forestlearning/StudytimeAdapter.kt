@@ -1,6 +1,4 @@
 package com.example.forestlearning
-
-
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -12,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forestlearning.databinding.FragmentSubjecttimerBinding
-
 
 class StudytimeAdapter()
     : ListAdapter<Subjects, StudytimeAdapter.Holder>(DiffCallback()) {

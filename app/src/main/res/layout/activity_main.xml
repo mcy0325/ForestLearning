@@ -6,7 +6,8 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/mainimg">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frg_navi"

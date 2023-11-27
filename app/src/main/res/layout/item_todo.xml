@@ -24,26 +24,30 @@
 
         <EditText
             android:id="@+id/contentTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="TextView"
+            android:text="오늘의 할일"
+            android:textColor="#2C3753"
             android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/btn_edit"
             android:layout_width="4dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_weight="0.3"
+            android:tint="#207CDF"
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <ImageButton
             android:id="@+id/btn_delete"
             android:layout_width="7dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_weight="0.3"
-            android:src="@android:drawable/btn_star"
-            tools:src="@android:drawable/ic_menu_delete" />
+            android:src="@android:drawable/ic_menu_delete"
+            android:tint="#252865" />
 
     </LinearLayout>
 

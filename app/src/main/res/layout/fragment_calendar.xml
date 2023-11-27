@@ -23,7 +23,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,21 +34,29 @@
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="383dp" />
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오늘의 할일을 확인해보세요!"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/day_text"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="wrap_content"
             android:layout_above="@id/calendarView"
             android:layout_centerHorizontal="true"
-            android:textSize="30sp"
+            android:textSize="34sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/CalendarRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_todo" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

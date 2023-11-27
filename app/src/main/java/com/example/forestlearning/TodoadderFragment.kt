@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.forestlearning.databinding.FragmentTodoadderBinding
@@ -62,17 +63,7 @@ class TodoadderFragment : Fragment() { //투두 추가 프래그먼트
 
                 // TodoadderFragment를 스택에서 제거하여 이전 화면으로 돌아가기
                 parentFragmentManager.popBackStack()
-                /*
-
-
-                // Firebase Realtime Database에 데이터 업로드
-                val newTodoRef = databaseReference.push()
-                newTodoRef.setValue(newTodoItem)
-
-                // TodoAddFragment를 스택에서 제거하여 이전 화면으로 돌아가기
-                parentFragmentManager.popBackStack()
-
-                 */
+                Toast.makeText(requireContext(), "오늘의 할일이 추가 되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -100,7 +100,7 @@ class TodolistFragment : Fragment() { //투두 리스트 프래그먼트
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.w(TAG, "Failed to read value.", error.toException())
+                    Log.w(TAG, "데이터 읽는 것을 실패함", error.toException())
                 }
             })
         }

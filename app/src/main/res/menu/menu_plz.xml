@@ -16,7 +16,7 @@
         android:title="나의 시간표" />
     <item
         android:id="@+id/fruitshowFragment"
-        android:title="과일 주간 랭킹" />
+        android:title="과일 누적 랭킹" />
 
     <item
         android:id="@+id/logoutFragment"

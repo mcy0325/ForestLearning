@@ -33,7 +33,7 @@ class TodoViewModel: ViewModel() {
     fun setSelectedDate(date: String) {
         selectedDate = date
         selectedDateLiveData.value = date
-        Log.d("TodoViewModel", "Selected date is set to $date")
+        Log.d("TodoViewModel", "선택된 날짜는 $date 로 설정 되었다람쥐")
     }
 
     // 선택된 날짜에 ToDo아이템을 추가하는 메서드
@@ -45,7 +45,7 @@ class TodoViewModel: ViewModel() {
 
     // 선택된 날짜를 반환하는 메서드
     fun getSelectedDate(): String {
-        Log.d("TodoViewModel", "선택된날짜 왜안돼: $selectedDate")
+        Log.d("TodoViewModel", "선택된 날짜: $selectedDate")
         return selectedDate
     }
 
@@ -64,10 +64,10 @@ class TodoViewModel: ViewModel() {
             databaseReference.child(userUid).child(item.id!!)
                 .setValue(item)
                 .addOnSuccessListener {
-                    Log.d(TAG, "Successfully updated todo item!")
+                    Log.d(TAG, "투두 업데이트 성공!")
                 }
                 .addOnFailureListener { e ->
-                    Log.w(TAG, "Failed to update todo item", e)
+                    Log.w(TAG, "투두 업데이트 실패 우우", e)
                 }
         }
     }

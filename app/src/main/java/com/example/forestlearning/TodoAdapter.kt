@@ -27,7 +27,6 @@ class TodoAdapter(private val viewModel: TodoViewModel) : ListAdapter<Todo, Todo
             binding.checkbox.isChecked = toDoItem.check
 
             // ToDo아이템의 나머지 데이터를 바인딩할 수 있음
-            // edit button click
             binding.btnEdit.setOnClickListener {
                 // 투두 아이템 수정 코드
                 val newContent = binding.contentTextView.text.toString() // 수정된 내용

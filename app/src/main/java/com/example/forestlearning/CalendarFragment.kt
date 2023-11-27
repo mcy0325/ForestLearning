@@ -28,7 +28,6 @@ import java.util.Date
 class CalendarFragment : Fragment() {
     var binding: FragmentCalendarBinding? = null
 
-    //var dayText: String? = null
     //23.11.20 추가
     private lateinit var todoViewModel: TodoViewModel
     //23.11.21 추가
@@ -54,7 +53,7 @@ class CalendarFragment : Fragment() {
         val calendarView = binding?.calendarView
 
         //날짜 형태
-        val dateFormat: DateFormat = SimpleDateFormat("yyyy년MM월dd일")
+        val dateFormat: DateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
 
         //date타입
         val date: Date = Date(calendarView!!.date)
@@ -102,7 +101,6 @@ class CalendarFragment : Fragment() {
     private fun loadTodoItems() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
-        //소름 수업에서 배웠던 let을 여기에 쓰네;;
         uid?.let { userUid ->
             //23.11.20 추가
             // ViewModel에서 선택된 날짜 가져오기
@@ -126,7 +124,7 @@ class CalendarFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
+                    Log.w(ContentValues.TAG, "데이터 읽는 것을 실패함", error.toException())
                 }
             })
         }

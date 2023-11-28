@@ -17,7 +17,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import com.example.forestlearning.databinding.FragmentTodaytreeBinding
 import java.lang.IllegalArgumentException
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.Calendar
+import java.util.Locale
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -49,7 +52,25 @@ class TodaytreeFragment : Fragment() {
             binding.totalTime.text = formatTime(it)
         })
         viewModel.date.observe(viewLifecycleOwner, Observer {
-            binding.todayDate.text = repo.setDate(it)
+            val setdate = repo.setDate(it)
+            val calendar = Calendar.getInstance()
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = dateFormat.parse(setdate)
+            if (date != null) {
+                calendar.time = date
+            }
+            val dayOfWeek = when(calendar.get(Calendar.DAY_OF_WEEK)){
+                1 -> "일요일"
+                2 -> "월요일"
+                3 -> "화요일"
+                4 -> "수요일"
+                5 -> "목요일"
+                6 -> "금요일"
+                7 -> "토요일"
+                else -> throw IllegalArgumentException("Unknown day of week")
+            }
+            val text = getString(R.string.date_with_day, setdate, dayOfWeek)
+            binding.todayDate.text = text
         })
         viewModel.treefruit.observe(viewLifecycleOwner, Observer {
             updateTree()

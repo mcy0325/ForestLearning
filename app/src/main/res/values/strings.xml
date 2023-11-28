@@ -8,4 +8,5 @@
     <string name="subject_name">과목명을 입력하세요</string>
     <string name="subject_info">추가 정보를 입력하시오</string>
     <string name="time_format">%1$d : %2$d : %3$d</string>
+    <string name="date_with_day">%1$s\n%2$s</string>
 </resources>

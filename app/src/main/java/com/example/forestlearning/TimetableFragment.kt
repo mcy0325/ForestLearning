@@ -39,21 +39,6 @@ class TimetableFragment : Fragment() {
             }
         }
 
-        //courseDeleteButton 버튼 클릭 시 대화 상자 표시
-        binding.courseDeleteButton.setOnClickListener {
-            auth.uid?.let { uid ->
-                AlertDialog.Builder(requireContext())
-                    .setTitle("강의 목록 전체 삭제")  // 대화상자의 제목 설정
-                    .setMessage("정말로 강의 목록을 모두 삭제하시겠습니까?")  // 대화상자의 메시지 설정
-                    .setPositiveButton("예") { dialog, which ->
-                        // "예" 버튼이 눌렸을 때의 동작 설정
-                        viewModel.deleteAllCourses(uid)  // 사용자의 UID 전달
-                    }
-                    .setNegativeButton("아니오", null)  // "아니오" 버튼이 눌렸을 때의 동작 설정
-                    .show()  // 대화 상자 표시
-            }
-        }
-
         //courseAddButton 클릭 시 courseAddFragment로 이동
         binding.courseAddButton.setOnClickListener {
             findNavController().navigate(R.id.action_timetableFragment_to_courseAddFragment)
@@ -99,10 +84,27 @@ class TimetableFragment : Fragment() {
                 for (time in start until end step 60) {
                     val key = "$day${convertMinuteToTime(time)}-${convertMinuteToTime(time + 60)}"
                     val textView = dayTimeMap[key] as? TextView
-                    textView?.text = "${course.courseName}\n${course.teacherName}\n$place"
+                    textView?.apply {
+                        text = "${course.courseName}\n${course.teacherName}\n$place"
+                        val context = context // context를 미리 가져옴
+                        setOnClickListener {
+                            context?.let {
+                                AlertDialog.Builder(it)
+                                    .setTitle("강의 삭제")  // 대화상자의 제목 설정
+                                    .setMessage("${course.courseName} 강의를 삭제하시겠습니까?")  // 대화상자의 메시지 설정
+                                    .setPositiveButton("예") { dialog, which ->
+                                        // "예" 버튼이 눌렸을 때의 동작 설정
+                                        viewModel.resetCourseData(course.courseName ?: "")  // 강의명 전달
+                                    }
+                                    .setNegativeButton("아니오", null)  // "아니오" 버튼이 눌렸을 때의 동작 설정
+                                    .show()  // 대화 상자 표시
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+
 
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -41,6 +42,22 @@ class CourseAddFragment : Fragment() {
 
         //courseEndButton 클릭 시 동작
         binding?.courseEndButton?.setOnClickListener {
+            // 강의 이름, 교수명, 강의실이 모두 입력되었는지 검사
+            if (binding?.courseName?.text.isNullOrEmpty() ||
+                binding?.teacherName?.text.isNullOrEmpty() ||
+                binding?.coursePlace1?.text.isNullOrEmpty() ||
+                binding?.coursePlace2?.text.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), "강의 정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // time1과 time2, time3과 time4가 같지 않은지 검사
+            if (timeSpinners?.getOrNull(0)?.selectedItem.toString() == timeSpinners?.getOrNull(1)?.selectedItem.toString() ||
+                timeSpinners?.getOrNull(2)?.selectedItem.toString() == timeSpinners?.getOrNull(3)?.selectedItem.toString()) {
+                Toast.makeText(requireContext(), "시간을 올바르게 설정해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             // 강의 정보를 설정
             viewModel.setCourseData(
                 binding?.courseName?.text.toString(),

@@ -54,10 +54,24 @@ class TimetableRepository {
             }
     }
 
-    // 사용자의 모든 강의를 제거하는 함수
-    fun removeAllCourses(userId: String) {
-        getCoursesReference(userId).removeValue()
+    fun deleteCourseByName(courseName: String) {
+        val userId = auth.currentUser?.uid ?: return
+        getCoursesReference(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { dataSnapshot ->
+                    val course = dataSnapshot.getValue(CourseData::class.java)
+                    if (course?.courseName == courseName) {
+                        dataSnapshot.ref.removeValue() // 해당 강의를 삭제
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // 데이터를 가져오는 것이 취소되었을 때의 처리
+            }
+        })
     }
+
 
     // 강의 데이터를 저장하고 있는 Firebase의 경로를 가져오는 함수
     private fun getCoursesReference(userId: String) = db.child("Courses").child(userId)

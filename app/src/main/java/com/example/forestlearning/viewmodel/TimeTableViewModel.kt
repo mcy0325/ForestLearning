@@ -24,10 +24,12 @@ class TimeTableViewModel : ViewModel(){
         repository.addCourse(courseData)
     }
 
-    // 모든 강의 데이터를 삭제하고 강의 정보를 다시 가져오는 함수
-    fun deleteAllCourses(userId: String) {
-        repository.removeAllCourses(userId)
+
+    // 강의 데이터를 삭제하는 함수
+    fun resetCourseData(courseName: String) {
+        // repository에서 강의 삭제
+        repository.deleteCourseByName(courseName)
+        // LiveData 갱신
         courses = repository.getCourses()
     }
-
 }

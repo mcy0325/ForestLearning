@@ -2,6 +2,7 @@ package com.example.forestlearning
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -42,10 +43,12 @@ class TodoAdapter(private val viewModel: TodoViewModel) : ListAdapter<Todo, Todo
 
                 // 투두 아이템 업데이트
                 viewModel.updateTodoItem(updatedTodo)
+                Toast.makeText(binding.root.context, "오늘의 할일이 수정되었습니다.", Toast.LENGTH_SHORT).show()
             }
 
             binding.btnDelete.setOnClickListener {
                 viewModel.deleteTodoItem(toDoItem)
+                Toast.makeText(binding.root.context, "오늘의 할일이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }

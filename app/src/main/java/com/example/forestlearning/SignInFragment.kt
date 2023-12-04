@@ -33,6 +33,10 @@ class SignInFragment : Fragment() {
             signIn(name, email, password)
         }
 
+        binding?.signInNoButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment2_to_loginFragment2)
+        }
+
         return binding?.root
     }
 

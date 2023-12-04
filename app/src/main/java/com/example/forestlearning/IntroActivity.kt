@@ -15,8 +15,8 @@ class IntroActivity : AppCompatActivity() {
         val handler = Handler()
         //핸들러에게 3초 후 실행할 작업 전달
         handler.postDelayed({
-            //새로운 인텐트 생성, 이 인텐트로 hostActivity 실행
-            val intent = Intent(applicationContext, hostActivity::class.java)
+            //새로운 인텐트 생성, 이 인텐트로 HostActivity 실행
+            val intent = Intent(applicationContext, HostActivity::class.java)
             startActivity(intent)
             //현재 액티비티 종료
             finish()

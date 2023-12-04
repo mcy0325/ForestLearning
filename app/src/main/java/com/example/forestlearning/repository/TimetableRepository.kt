@@ -72,8 +72,6 @@ class TimetableRepository {
         })
     }
 
-
     // 강의 데이터를 저장하고 있는 Firebase의 경로를 가져오는 함수
     private fun getCoursesReference(userId: String) = db.child("Courses").child(userId)
-
 }

@@ -18,7 +18,6 @@ class Authentication: MultiDexApplication() {
             //firebase에 등록한 사용자 정보 불러오기
             val currentUser = auth.currentUser
             return currentUser?.let {
-
                 //유저 정보가 있으면 email 가져오기
                 email = currentUser.email
 

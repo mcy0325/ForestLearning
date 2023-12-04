@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.forestlearning.CalendarFragment"
-        android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" >
+        android:label="학습의 숲"
+        tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_fruitshowFragment"
             app:destination="@id/fruitshowFragment" />
@@ -32,12 +32,12 @@
     <fragment
         android:id="@+id/fruitshowFragment"
         android:name="com.example.forestlearning.FruitshowFragment"
-        android:label="fragment_fruitshow"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_fruitshow" />
     <fragment
         android:id="@+id/todolistFragment"
         android:name="com.example.forestlearning.TodolistFragment"
-        android:label="fragment_todolist"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_todolist" >
         <action
             android:id="@+id/action_todolistFragment_to_todoadderFragment"
@@ -46,12 +46,12 @@
     <fragment
         android:id="@+id/todaytreeFragment"
         android:name="com.example.forestlearning.TodaytreeFragment"
-        android:label="fragment_todaytree"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_todaytree" />
     <fragment
         android:id="@+id/timetableFragment"
         android:name="com.example.forestlearning.TimetableFragment"
-        android:label="fragment_timetable"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_timetable" >
         <action
             android:id="@+id/action_timetableFragment_to_courseAddFragment"
@@ -60,7 +60,7 @@
     <fragment
         android:id="@+id/courseAddFragment"
         android:name="com.example.forestlearning.CourseAddFragment"
-        android:label="fragment_course_add"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_course_add" >
         <action
             android:id="@+id/action_courseAddFragment_to_timetableFragment"
@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/todoadderFragment"
         android:name="com.example.forestlearning.TodoadderFragment"
-        android:label="TodoadderFragment" >
+        android:label="학습의 숲" >
         <action
             android:id="@+id/action_todoadderFragment_to_todolistFragment"
             app:destination="@id/todolistFragment" />
@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/study_timeFragment"
         android:name="com.example.forestlearning.Study_timeFragment"
-        android:label="fragment_study_time"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_study_time" >
 
         <action
@@ -88,7 +88,7 @@
     <fragment
         android:id="@+id/subject_adderFragment"
         android:name="com.example.forestlearning.Subject_adderFragment"
-        android:label="fragment_subject_adder"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_subject_adder" >
         <action
             android:id="@+id/action_subject_adderFragment_to_study_timeFragment"
@@ -97,7 +97,7 @@
     <fragment
         android:id="@+id/logoutFragment"
         android:name="com.example.forestlearning.LogoutFragment"
-        android:label="fragment_logout"
+        android:label="학습의 숲"
         tools:layout="@layout/fragment_logout" >
         <action
             android:id="@+id/action_logoutFragment_to_hostActivity"
@@ -105,7 +105,7 @@
     </fragment>
     <activity
         android:id="@+id/hostActivity"
-        android:name="com.example.forestlearning.hostActivity"
-        android:label="activity_host"
+        android:name="com.example.forestlearning.HostActivity"
+        android:label="학습의 숲"
         tools:layout="@layout/activity_host" />
 </navigation>

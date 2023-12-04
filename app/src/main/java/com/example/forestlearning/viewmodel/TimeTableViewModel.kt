@@ -24,7 +24,6 @@ class TimeTableViewModel : ViewModel(){
         repository.addCourse(courseData)
     }
 
-
     // 강의 데이터를 삭제하는 함수
     fun resetCourseData(courseName: String) {
         // repository에서 강의 삭제

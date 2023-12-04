@@ -52,13 +52,27 @@
 
     <Button
         android:id="@+id/signInEndButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
         android:text="회원가입 완료"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.535" />
+        app:layout_constraintVertical_bias="0.519" />
+
+    <Button
+        android:id="@+id/signInNoButton"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="회원가입 취소"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.774"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
 </androidx.constraintlayout.widget.ConstraintLayout>

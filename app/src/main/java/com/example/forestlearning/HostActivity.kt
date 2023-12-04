@@ -3,7 +3,7 @@ package com.example.forestlearning
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class hostActivity : AppCompatActivity() {
+class HostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host)

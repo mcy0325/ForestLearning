@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.forestlearning.Authentication.Companion.auth
 import com.example.forestlearning.databinding.FragmentTimetableBinding
 import com.example.forestlearning.viewmodel.TimeTableViewModel
 
@@ -31,8 +30,15 @@ class TimetableFragment : Fragment() {
 
         val dayTimeMap = initDayTimeMap()
 
-        //강의 정보를 관찰하고 해당하는 시간에 강의 정보 설정
         viewModel.courses.observe(viewLifecycleOwner) { courses ->
+            // 강의 정보 지우기
+            dayTimeMap.values.forEach { view ->
+                if (view is TextView) {
+                    view.text = ""
+                }
+            }
+
+            // 강의 정보를 설정하기
             courses.forEach { course ->
                 setCourseInfo(dayTimeMap, course, course.day1, course.coursePlace1, course.time1?.let { convertTimeToMinute(it) }, course.time2?.let { convertTimeToMinute(it) })
                 setCourseInfo(dayTimeMap, course, course.day2, course.coursePlace2, course.time3?.let { convertTimeToMinute(it) }, course.time4?.let { convertTimeToMinute(it) })
@@ -95,6 +101,7 @@ class TimetableFragment : Fragment() {
                                     .setPositiveButton("예") { dialog, which ->
                                         // "예" 버튼이 눌렸을 때의 동작 설정
                                         viewModel.resetCourseData(course.courseName ?: "")  // 강의명 전달
+
                                     }
                                     .setNegativeButton("아니오", null)  // "아니오" 버튼이 눌렸을 때의 동작 설정
                                     .show()  // 대화 상자 표시
@@ -105,6 +112,4 @@ class TimetableFragment : Fragment() {
             }
         }
     }
-
-
 }

@@ -51,24 +51,21 @@ class CalendarFragment : Fragment() {
         //객체 생성
         val dayText = binding?.dayText
         val calendarView = binding?.calendarView
+        val dateFormat: DateFormat = SimpleDateFormat("yyyy년 MM월 dd일") //날짜 형태를 수정
+        val date: Date = Date(calendarView!!.date) //date타입
 
-        //날짜 형태를 수정
-        val dateFormat: DateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
-
-        //date타입
-        val date: Date = Date(calendarView!!.date)
-
-        //현재 날짜 담기
         dayText?.text = dateFormat.format(date)
+        //데이터 클래스를 사용해 현재 날짜를 가져오고 정해둔 형식에 맞춰서 텍스트뷰에 표시
 
         //23.11.20 추가
         todoViewModel = ViewModelProvider(requireActivity()).get(TodoViewModel::class.java)
+        //데이터를 가지는 투두 뷰모델을 다른 프래그먼트에서도 사용할 수 있도록 초기화
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val selectedDate = "${year}년 ${month + 1}월 ${dayOfMonth}일"
             todoViewModel.setSelectedDate(selectedDate)
             loadTodoItems()
-        }
+        } //캘린더뷰의 선택된 날짜를 뷰모델로 옮겨주고, 기존의 투두 아이템들을 데려옴
 
         //23.11.21 추가
         // Firebase 데이터베이스 참조
@@ -83,13 +80,13 @@ class CalendarFragment : Fragment() {
         toDoAdapter = TodoAdapter(todoViewModel)
         recyclerView.adapter = toDoAdapter
 
-        // ViewModel에서 LiveData를 관찰하여 데이터 변경을 감지하고 UI 갱신
+        // ViewModel에서 toDoItemList의 LiveData를 관찰하여 데이터가 변경되면 옵저브 -> UI 갱신
         todoViewModel.toDoItemList.observe(viewLifecycleOwner, Observer { newList ->
             toDoAdapter.submitList(newList)
         })
 
         //23.11.21
-        // 선택된 날짜를 표시
+        // calendarfragment의 텍스트 뷰 선택된 날짜를 표시
         todoViewModel.selectedDateLiveData.observe(viewLifecycleOwner, Observer { date ->
             binding?.dayText?.text = date
         })
@@ -98,7 +95,7 @@ class CalendarFragment : Fragment() {
         loadTodoItems()
     }
     //23.11.21 추가
-    private fun loadTodoItems() {
+    private fun loadTodoItems() { //선택된 날짜의 Todo를 가져와 UI갱신
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
         uid?.let { userUid ->

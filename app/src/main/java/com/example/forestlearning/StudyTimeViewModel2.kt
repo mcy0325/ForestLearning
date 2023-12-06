@@ -20,7 +20,7 @@ class StudyTimeViewModel2 : ViewModel() {
     private val _date = MutableLiveData<LocalDate>()
 
     // 현재 설정된 date에 저장된 totaltime 저장 LiveData
-    val totaltime: MutableLiveData<Time> get() = _totaltime
+    val totaltime: LiveData<Time> get() = _totaltime
     private val _totaltime = MutableLiveData<Time>()
 
     // 오늘 내가 저장한 subject들을 list로 저장하여 업데이트하는 LiveData
@@ -28,7 +28,7 @@ class StudyTimeViewModel2 : ViewModel() {
     private val _subjectsLiveList = MutableLiveData<MutableList<Subjects>>()
 
     // 오늘 생성한 subject들의 time들을 더한 LiveData
-    val todaytotaltime: MutableLiveData<Time> get() = _todaytotaltime
+    val todaytotaltime: LiveData<Time> get() = _todaytotaltime
     private val _todaytotaltime = MutableLiveData<Time>()
 
     // date에 획득한 fruit들의 갯수를 저장하는 LiveData (fruitnum, fruitcount)2

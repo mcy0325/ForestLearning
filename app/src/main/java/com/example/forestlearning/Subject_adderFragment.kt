@@ -36,6 +36,7 @@ class Subject_adderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // spinner를 통해 과목의 과일을 선택
         spinner = binding.fruitSelection
 
         spinner.onItemSelectedListener = object : AdapterView
@@ -53,6 +54,8 @@ class Subject_adderFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
 
+        // 과목 추가 버튼을 누르면 과목명과 info를 입력받아서 StudyTimeViewModel2에 추가
+        // 과일 정보도 현재 spinner에서 선택된 과일로 추가
         binding.addButtonSubject.setOnClickListener {
             if (binding.subjectInfoInput.text?.isEmpty() == true ||
                 binding.subjectInfoInput.text?.isEmpty() == true) {
@@ -72,6 +75,7 @@ class Subject_adderFragment : Fragment() {
                 viewModel.addSubjects(temp)
                 findNavController().navigate(R.id.action_subject_adderFragment_to_study_timeFragment)
             } } }
+    // spinner에서 선택된 과일에 따라 과일 이미지 변경
     private fun updateFruitImage(fruitName: String) {
         val fruitDrawable = when (fruitName) {
             "Apple" -> R.drawable.apple_resize

@@ -79,8 +79,8 @@ class CourseAddFragment : Fragment() {
         val timeAdapter = ArrayAdapter.createFromResource(requireContext(), R.array.time, android.R.layout.simple_spinner_dropdown_item)
 
         // 각각의 스피너에 어댑터 연결
-        daySpinners?.forEach { it?.adapter = dayAdapter }
-        timeSpinners?.forEach { it?.adapter = timeAdapter }
+        daySpinners?.forEach { it.adapter = dayAdapter }
+        timeSpinners?.forEach { it.adapter = timeAdapter }
 
     }
 

@@ -16,6 +16,6 @@ class FruitshowViewModel : ViewModel() {
     private val repository = FruitshowRepository()
 
     // repository를 통해 과일 데이터를 가져와 LiveData 형태로 저장
-    // 과일 데이터가 변경될 때마다 UI를 자동으로 업데이트
+    // 과일 데이터가 변경될 때마다 자동으로 업데이트
     val fruitData: LiveData<List<FruitShowData>> = repository.fetchFruitData()
 }

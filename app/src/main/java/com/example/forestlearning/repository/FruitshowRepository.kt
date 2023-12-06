@@ -15,7 +15,7 @@ class FruitshowRepository {
 
     fun fetchFruitData(): LiveData<List<FruitShowData>> {
         // LiveData 선언. 이 LiveData는 Firebase에서 가져온 과일 데이터를 갖게 됨
-        val _fruitData = MutableLiveData<List<FruitShowData>>()
+        val fruitDataList = MutableLiveData<List<FruitShowData>>()
         // Firebase Realtime Database에서 데이터를 불러오는 이벤트 리스너 설정
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -42,14 +42,14 @@ class FruitshowRepository {
 
                 // 과일 개수를 기준으로 데이터를 정렬하고 _fruitData에 추가
                 temp.sortByDescending { it.fruitnum }
-                _fruitData.value = temp
+                fruitDataList.value = temp
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // 데이터를 가져오는데 실패했을 때 처리
             }
         })
-        return _fruitData
+        return fruitDataList
     }
 }
 

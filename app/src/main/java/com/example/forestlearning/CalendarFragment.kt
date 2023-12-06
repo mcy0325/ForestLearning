@@ -52,7 +52,7 @@ class CalendarFragment : Fragment() {
         val dayText = binding?.dayText
         val calendarView = binding?.calendarView
 
-        //날짜 형태
+        //날짜 형태를 수정
         val dateFormat: DateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
 
         //date타입

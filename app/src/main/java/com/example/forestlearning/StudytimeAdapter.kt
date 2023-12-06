@@ -96,11 +96,11 @@ class StudytimeAdapter()
         }
     }
 
+    // DiffCallback : ListAdapter의 데이터가 변경될 때 데이터의 동일성을 파악해 애니메이션 및 성능 향상
     private class DiffCallback : DiffUtil.ItemCallback<Subjects>() {
         override fun areItemsTheSame(oldItem: Subjects, newItem: Subjects): Boolean {
             return oldItem.name == newItem.name
         }
-
         override fun areContentsTheSame(oldItem: Subjects, newItem: Subjects): Boolean {
             return oldItem == newItem
         }

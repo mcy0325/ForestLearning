@@ -4,6 +4,8 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+// spancount는 한 행에 위치할 수 있는 아이템 최대 갯수
+// space는 아이템 간의 간격
 class GridSpaceItemDecoration(private val spancount: Int, private val space: Int): RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(

@@ -73,7 +73,7 @@ class TodolistFragment : Fragment() { //투두 리스트 프래그먼트
         // UI 갱신은 LiveData가 알아서 처리
     }
 
-    private fun loadTodoItems() {
+    private fun loadTodoItems() { //파이어베이스에서 Todo를 데려오고 뷰모델을 통해서 아이템을 갱신한다
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
         //소름 수업에서 배웠던 let을 여기에 쓰네;;
